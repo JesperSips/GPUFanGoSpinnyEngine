@@ -1,10 +1,21 @@
 // GPUFanGoSpinny.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#if defined(CreateWindow)
+#undef CreateWindow
+#endif
+
+#include "Window.h"
 
 #include <iostream>
 
+Window window;
+HINSTANCE instance;
+
 int main()
 {
+    window.CreateWindow(L"Window", instance, L"I am in hell", 500, 500);
     std::cout << "Hello World!\n";
 }
 

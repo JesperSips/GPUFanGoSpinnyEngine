@@ -3,7 +3,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 class Window
 {
 public: 
-	Window();
+	Window() {};
 
 	void CreateWindow(const wchar_t* p_windowClassName, HINSTANCE p_hInst, const wchar_t* p_windowTitle, UINT32 p_width, UINT32 p_height);
 
