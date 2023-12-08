@@ -8,15 +8,25 @@
 
 #include "Window.h"
 
-#include <iostream>
+#include <stdio.h>
 
 Window window;
-HINSTANCE instance;
 
-int main()
+static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    window.CreateWindow(L"Window", instance, L"I am in hell", 500, 500);
-    std::cout << "Hello World!\n";
+    LRESULT result = 0;
+    switch (message)
+    {
+    default:
+        result = DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return result;
+}
+
+int APIENTRY wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hInstPrev, _In_ LPWSTR cmdline, _In_ int cmdshow)
+{
+    window.RegisterWindowClass(hInst, L"I am in hell");
+    window.CreateWindow(L"Window", hInst, L"I am in hell", 500, 500);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
