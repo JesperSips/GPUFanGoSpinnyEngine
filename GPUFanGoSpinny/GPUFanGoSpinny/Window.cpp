@@ -1,20 +1,11 @@
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#if defined(CreateWindow)
-#undef CreateWindow
-#endif
-
-#include <algorithm>
-#include <cassert>
-#include <chrono>
-
+#include "pch.h"
 #include "Window.h"
 
 void Window::RegisterWindowClass(HINSTANCE p_hInst, LPCWSTR p_className)
 {
 	m_wcex.cbSize = sizeof(WNDCLASSEX);
 	m_wcex.style = CS_HREDRAW | CS_VREDRAW;
-	m_wcex.lpfnWndProc = &WndProc;
+	m_wcex.lpfnWndProc = &wndProc;
 	m_wcex.cbClsExtra = 0;
 	m_wcex.cbWndExtra = 0;
 	m_wcex.hInstance = p_hInst;
@@ -65,4 +56,19 @@ void Window::CreateWindow(const wchar_t* p_windowClassName, HINSTANCE p_hInst, c
 	assert(hWnd);
 
 	m_hWnd = hWnd;
+}
+
+void Window::SetupWindow()
+{
+}
+
+LRESULT Window::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LRESULT result = 0;
+	switch (message)
+	{
+	default:
+		result = DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return result;
 }

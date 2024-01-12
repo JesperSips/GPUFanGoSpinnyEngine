@@ -1,32 +1,10 @@
 // GPUFanGoSpinny.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#if defined(CreateWindow)
-#undef CreateWindow
-#endif
-
-#include "Window.h"
-
-#include <stdio.h>
-
-Window window;
-
-static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    LRESULT result = 0;
-    switch (message)
-    {
-    default:
-        result = DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return result;
-}
+#include "pch.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hInstPrev, _In_ LPWSTR cmdline, _In_ int cmdshow)
 {
-    window.RegisterWindowClass(hInst, L"I am in hell");
-    window.CreateWindow(L"Window", hInst, L"I am in hell", 500, 500);
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
