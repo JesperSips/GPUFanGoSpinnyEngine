@@ -10,5 +10,8 @@ public:
 
 private:
 	Window* m_window = nullptr;
+
+	void Update();
+	void Terminate();
 };
 

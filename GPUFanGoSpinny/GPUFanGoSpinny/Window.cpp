@@ -83,6 +83,11 @@ void Window::Update()
 	// Process any messages in the queue.
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
+		if (msg.message == WM_QUIT)
+		{
+			m_isQuitting = true;
+		}
+
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
@@ -93,6 +98,11 @@ LRESULT Window::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	LRESULT result = 0;
 	switch (message)
 	{
+	case WM_CLOSE:
+		DestroyWindow(hWnd);
+		/* stop event queue thread */
+		PostQuitMessage(0);
+		break;
 	default:
 		result = DefWindowProc(hWnd, message, wParam, lParam);
 	}
