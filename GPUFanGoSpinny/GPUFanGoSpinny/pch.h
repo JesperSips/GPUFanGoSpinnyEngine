@@ -5,8 +5,11 @@
 #undef CreateWindow
 #endif
 
+#include <iostream>
 #include <stdio.h>
 #include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <string>
+
+#include <gl/GL.h>

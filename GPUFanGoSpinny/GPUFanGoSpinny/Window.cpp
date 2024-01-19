@@ -73,6 +73,52 @@ void Window::SetupWindow()
 {
 	RegisterWindowClass();
 	CreateWindow();
+
+	m_deviceContext = GetDC(m_hWnd);
+
+	if (!m_deviceContext)
+	{
+		throw;
+	}
+
+	int pixelFormat;
+	PIXELFORMATDESCRIPTOR pfd = {
+		sizeof(PIXELFORMATDESCRIPTOR), // size of the pdf
+		1, // version number
+		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER, // support window, OpenGL and doube buffering
+		PFD_TYPE_RGBA, //RGBA type pixels
+		32, // 32-bit color depth
+		0, 0, 0, 0, 0, 0, // no color bits
+		8, // 8-bit alpha depth
+		0, // no shift bits
+		0, // no accumulation buffer
+		0, 0, 0, 0, // no accumulation bits
+		PFD_MAIN_PLANE, // main layer, ignored in current implementation of OpenGL
+		0, // reserved, specifies the number of overlay and underlay planes
+		0, 0, 0 // no layer masks
+	};
+
+	pixelFormat = ChoosePixelFormat(m_deviceContext, &pfd);
+	if (pixelFormat)
+	{
+		if (SetPixelFormat(m_deviceContext, pixelFormat, &pfd))
+		{
+			m_renderContext = wglCreateContext(m_deviceContext);
+			if (!m_renderContext)
+			{
+				throw;
+			}
+		}
+		else
+		{
+			throw;
+		}
+	}
+	else
+	{
+		throw;
+	}
+
 	ShowWindow(m_hWnd, SW_NORMAL);
 }
 
@@ -80,6 +126,7 @@ void Window::Update()
 {
 	// Window Loop sends events.
 	MSG msg = {};
+
 	// Process any messages in the queue.
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
@@ -91,6 +138,11 @@ void Window::Update()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+	else if (!SwapBuffers(m_deviceContext))
+	{
+		DWORD error = GetLastError();
+		throw;
+	};
 }
 
 LRESULT Window::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

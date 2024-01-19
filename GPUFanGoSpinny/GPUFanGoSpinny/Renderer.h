@@ -11,6 +11,7 @@ public:
 private:
 	Window* m_window = nullptr;
 
+	void Render();
 	void Update();
 	void Terminate();
 };

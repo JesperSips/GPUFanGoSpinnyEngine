@@ -15,6 +15,13 @@ public:
 		return m_hWnd;
 	};
 
+	HDC GetDeviceContext() const {
+		return m_deviceContext;
+	}
+
+	HGLRC GetRenderContext() const{
+		return m_renderContext;
+	}
 protected:
 	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -33,6 +40,8 @@ private:
 	float m_aspectRatio = 0;
 	bool m_fullscreen = false;
 
+	HDC m_deviceContext = nullptr;
+	HGLRC m_renderContext = nullptr;
 	// Becomes true when the renderer needs to close
 	bool m_isQuitting = false;
 };
