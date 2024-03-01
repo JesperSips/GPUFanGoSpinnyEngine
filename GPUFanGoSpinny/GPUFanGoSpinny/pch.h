@@ -16,3 +16,4 @@
 
 //#define GLEW_STATIC
 #include <glew.h>
+#include "GLFW/glfw3.h"

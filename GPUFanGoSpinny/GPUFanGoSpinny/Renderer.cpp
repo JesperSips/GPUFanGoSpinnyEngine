@@ -31,18 +31,18 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height, Mesh* p_mesh)
 {
+	glfwInit();
+
 	m_mesh = p_mesh;
 
-	m_window = new Window(p_width, p_height, L"GPU fan go spinny engine", p_hInstance);
-	m_window->SetupWindow();
-
-	glViewport(0, 0, p_width, p_height);
-	wglMakeCurrent(m_window->GetDeviceContext(), m_window->GetRenderContext());
+	m_window = new Window(p_width, p_height, "GPU fan go spinny engine");
 
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "GLEW init failed" << std::endl;
 		throw;
 	}
+
+	glViewport(0, 0, p_width, p_height);
 
 	GLuint VBO = 0, VAO = 0;
 	glGenBuffers(1, &VBO);
@@ -135,4 +135,5 @@ void Renderer::Update()
 
 void Renderer::Terminate()
 {
+	glfwTerminate();
 }
