@@ -7,9 +7,12 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <algorithm>
 #include <cassert>
+
+#include <algorithm>
 #include <chrono>
 #include <string>
+#include <vector>
 
-#include <gl/GL.h>
+//#define GLEW_STATIC
+#include <glew.h>

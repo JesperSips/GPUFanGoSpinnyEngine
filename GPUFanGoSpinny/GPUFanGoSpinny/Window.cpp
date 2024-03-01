@@ -69,6 +69,10 @@ Window::Window(UINT32 p_width, UINT32 p_height, std::wstring p_title, HINSTANCE 
 	m_hInstance = p_hInstance;
 }
 
+Window::~Window()
+{
+}
+
 void Window::SetupWindow()
 {
 	RegisterWindowClass();

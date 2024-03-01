@@ -3,6 +3,7 @@ class Window
 {
 public:
 	Window(UINT32 p_width, UINT32 p_height, std::wstring p_title, HINSTANCE p_hInstance);
+	~Window();
 
 	void SetupWindow();
 	void Update();
