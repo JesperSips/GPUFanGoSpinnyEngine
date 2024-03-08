@@ -25,6 +25,8 @@ Mesh::~Mesh()
 {
 }
 
+// Default mesh functions:
+
 // Original with no indices
 
 //void Mesh::CreateTriangle()
@@ -51,9 +53,9 @@ void Mesh::CreateTriangle()
 
     Vertex vertice[] =
     {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+     0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f 
     };
 
     GLuint indices[] = {
@@ -78,10 +80,10 @@ void Mesh::CreateQuad()
 
     Vertex vertice[] =
     {
-     0.5f,  0.5f, 0.0f,  // top right
-     0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  // bottom left
-    -0.5f,  0.5f, 0.0f   // top left 
+     0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // top right
+     0.5f, -0.5f, 0.0f, 0.6f, 0.2f, 1.0f,// bottom right
+    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,// bottom left
+    -0.5f,  0.5f, 0.0f, 0.4f, 1.0f, 0.6f// top left 
     };
 
     GLuint indices[] = { 
@@ -152,15 +154,15 @@ void Mesh::CreateCube()
 
     Vertex vertices[] = {
         // Front face
-        -0.5f, -0.5f,  0.5f,  // Bottom-left
-         0.5f, -0.5f,  0.5f,  // Bottom-right
-         0.5f,  0.5f,  0.5f,  // Top-right
-        -0.5f,  0.5f,  0.5f,  // Top-left
+        -0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f,  // Bottom-left
+         0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f,  // Bottom-right
+         0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,  // Top-right
+        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,  // Top-left
         // Back face
-        -0.5f, -0.5f, -0.5f,  // Bottom-left
-         0.5f, -0.5f, -0.5f,  // Bottom-right
-         0.5f,  0.5f, -0.5f,  // Top-right
-        -0.5f,  0.5f, -0.5f,  // Top-left
+        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,  // Bottom-left
+         0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,  // Bottom-right
+         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f,  // Top-right
+        -0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f,  // Top-left
     };
 
     GLuint indices[] = {
