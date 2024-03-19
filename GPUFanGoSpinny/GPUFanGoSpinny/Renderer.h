@@ -8,11 +8,19 @@ public:
 	Renderer();
 	~Renderer();
 
-	void Initialize(HINSTANCE p_hInstance, int p_width, int p_height, Mesh* p_mesh);
+	void Initialize(HINSTANCE p_hInstance, int p_width, int p_height);
+	
+	bool IsQuitting();
 
+	void Update();
+	void Terminate();
+
+	void AddMesh(Mesh* p_mesh);
 private:
 	Window* m_window = nullptr;
 
+	GLuint m_VBO = 0;
+	GLuint m_EBO = 0;
 	GLuint m_VAO = 0;
 
 	Shader* m_shader = nullptr;
@@ -21,7 +29,5 @@ private:
 	Mesh* m_mesh = nullptr;
 
 	void Render();
-	void Update();
-	void Terminate();
 };
 

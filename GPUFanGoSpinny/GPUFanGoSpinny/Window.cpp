@@ -16,10 +16,24 @@ Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
 
 	if (!m_window)
 	{
+		std::cerr << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
 		throw;
 	}
 
+	// Check OpenGL context version
+	int major, minor, revision;
+	glfwGetVersion(&major, &minor, &revision);
+	std::cout << "OpenGL context version: " << major << "." << minor << std::endl;
+
 	glfwMakeContextCurrent(m_window);
+	// Check for errors after making context current
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		std::cerr << "Error making OpenGL context current: " << error << std::endl;
+		throw;
+	}
 }
 
 Window::~Window()

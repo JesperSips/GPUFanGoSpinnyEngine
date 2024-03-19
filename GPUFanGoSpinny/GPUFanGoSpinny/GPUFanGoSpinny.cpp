@@ -1,14 +1,13 @@
 // GPUFanGoSpinny.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include "pch.h"
-#include "Renderer.h"
+#include "Engine.h"
 #include "Mesh.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hInstPrev, _In_ LPWSTR cmdline, _In_ int cmdshow)
 {
-	Mesh* mesh = new Mesh(2);
-	Renderer renderer;
-	renderer.Initialize(hInst, 500, 500, mesh);
+	Engine engine;
+	engine.Initialize(hInst);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

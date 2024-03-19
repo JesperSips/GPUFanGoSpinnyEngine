@@ -21,16 +21,20 @@ public:
 	inline std::vector<GLuint> getIndices() { return m_indices; }
 
 private:
+	// Number used to identify mesh
+	// Not sure if this will be necessary in the future
+	//unsigned int m_ID = 0;
+
 	// Stores all the vertex data
 	std::vector<Vertex>	 m_vertexData;
 
-	// The amount of vertices this mesh has (not sure if this is necessary with the indices
+	// The amount of vertices this mesh has
 	GLuint m_numVertex = 0;
 
-	// Stores all indices (not sure if this just being integers is okay)
+	// Stores all indices
 	std::vector<GLuint> m_indices;
 
-	// The amount of indices this mesh has (no idea if this is necessary at all)
+	// The amount of indices this mesh has 
 	GLuint m_numIndex = 0;
 
 	// Create default meshes
