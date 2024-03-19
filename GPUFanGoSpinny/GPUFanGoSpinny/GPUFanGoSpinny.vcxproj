@@ -122,6 +122,12 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\lib;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(TargetDir)Shaders"
+copy "$(ProjectDir)Shaders\vshader.vs" "$(TargetDir)Shaders"
+copy "$(ProjectDir)Shaders\fshader.fs" "$(TargetDir)Shaders"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -143,6 +149,12 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\lib;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(TargetDir)Shaders"
+copy "$(ProjectDir)Shaders\vshader.vs" "$(TargetDir)Shaders"
+copy "$(ProjectDir)Shaders\fshader.fs" "$(TargetDir)Shaders"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
@@ -166,6 +178,22 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\fshader.fs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="Shaders\vshader.vs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
