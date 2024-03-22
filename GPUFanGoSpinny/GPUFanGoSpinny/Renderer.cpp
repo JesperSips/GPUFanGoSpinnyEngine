@@ -31,6 +31,8 @@ void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
 	glViewport(0, 0, p_width, p_height);
 
+	glEnable(GL_DEPTH_TEST);
+
 	GLuint VBO = 0, EBO = 0, VAO = 0;
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -62,6 +64,11 @@ void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 	m_VAO = VAO;
 
 	m_shader = new Shader("Shaders/vshader.vs", "Shaders/fshader.fs");
+
+	// Temporary transformation code
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 }
 
 bool Renderer::IsQuitting()
@@ -70,17 +77,29 @@ bool Renderer::IsQuitting()
 }
 
 void Renderer::Render()
-{
+{ 
+	model = glm::rotate(model, ((float)glfwGetTime() * 0.0001f) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+
+	GLenum error;
+
 	glClearColor(0.9f, 0.8f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_shader->use();
 
+	unsigned int modelLoc = glGetUniformLocation(m_shader->m_ID, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	unsigned int viewLoc = glGetUniformLocation(m_shader->m_ID, "view");
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+	unsigned int projLoc = glGetUniformLocation(m_shader->m_ID, "projection");
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
 	// Check for OpenGL errors
-	GLenum error;
 	while ((error = glGetError()) != GL_NO_ERROR) {
 		std::cerr << "OpenGL error before draw call: " << error << std::endl;
-		//throw;
+		throw;
 	}
 
 	glDrawElements(GL_TRIANGLES, m_mesh->getIndices().size(), GL_UNSIGNED_INT, 0);
@@ -88,7 +107,7 @@ void Renderer::Render()
 	// Check for OpenGL errors
 	while ((error = glGetError()) != GL_NO_ERROR) {
 		std::cerr << "OpenGL error after draw call: " << error << std::endl;
-		//throw;
+		throw;
 	}
 
 	glGetError();
@@ -108,9 +127,6 @@ void Renderer::Terminate()
 void Renderer::AddMesh(Mesh* p_mesh)
 {
 	m_mesh = p_mesh;
-
-	//glGenBuffers(1, &m_VBO);
-	//glGenBuffers(1, &m_EBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_mesh->getVertexData().size(), m_mesh->getVertexData().data(), GL_STATIC_DRAW);

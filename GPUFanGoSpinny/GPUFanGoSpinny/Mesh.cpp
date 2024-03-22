@@ -156,42 +156,63 @@ void Mesh::CreateQuad()
 
 void Mesh::CreateCube()
 {
-    m_numVertex = 8;
+    m_numVertex = 24;
     m_numIndex = 36;
 
     Vertex vertices[] = {
-        // positions,       // rgb color      // texcoords
-        // Front face
-        -0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Bottom-left
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Bottom-right
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  // Top-right
-        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top-left
-        // Back face
-        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Bottom-left
-         0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Bottom-right
-         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  // Top-right
-        -0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Top-left
+    // positions,       // rgb color      // texcoords
+    // Front face
+    {-0.5f, -0.5f, 0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f},  // Bottom-left
+    { 0.5f, -0.5f, 0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f},  // Bottom-right
+    { 0.5f,  0.5f, 0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f},  // Top-right
+    {-0.5f,  0.5f, 0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f},  // Top-left
+
+    // Back face
+    {-0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f}, // Bottom-left
+    { 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f}, // Bottom-right
+    { 0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f}, // Top-right
+    {-0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f}, // Top-left
+
+    // Right face
+    { 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 0.0f}, // Bottom-left
+    { 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f}, // Bottom-right
+    { 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f}, // Top-right
+    { 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f}, // Top-left
+
+    // Left face
+    {-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 0.0f}, // Bottom-left
+    {-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f}, // Bottom-right
+    {-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f}, // Top-right
+    {-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f}, // Top-left
+
+    // Top face
+    {-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f}, // Bottom-left
+    { 0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f}, // Bottom-right
+    { 0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f}, // Top-right
+    {-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f}, // Top-left
+
+    // Bottom face
+    {-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f}, // Bottom-left
+    { 0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f}, // Bottom-right
+    { 0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f}, // Top-right
+    {-0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f}  // Top-left
+    
     };
+    
 
     GLuint indices[] = {
-        // Front face
-        0, 1, 2,
+        0, 1, 2,  // Front face
         2, 3, 0,
-        // Right face
-        1, 5, 6,
-        6, 2, 1,
-        // Back face
-        7, 6, 5,
-        5, 4, 7,
-        // Left face
-        4, 0, 3,
-        3, 7, 4,
-        // Bottom face
-        4, 5, 1,
-        1, 0, 4,
-        // Top face
-        3, 2, 6,
-        6, 7, 3
+        4, 5, 6,  // Back face
+        6, 7, 4,
+        8, 9, 10, // Right face
+        10, 11, 8,
+        12, 13, 14, // Left face
+        14, 15, 12,
+        16, 17, 18, // Top face
+        18, 19, 16,
+        20, 21, 22, // Bottom face
+        22, 23, 20
     };
 
     for (UINT i = 0; i < m_numVertex; i++)

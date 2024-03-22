@@ -14,7 +14,7 @@ void Engine::Initialize(HINSTANCE p_hInstance)
 {
 	m_renderer.Initialize(p_hInstance, 500, 500);
 
-	Mesh* mesh = new Mesh(2);
+	Mesh* mesh = new Mesh(3);
 	m_renderer.AddMesh(mesh);
 
 	// Update loop starts here, make sure to initialize everything beforehand
