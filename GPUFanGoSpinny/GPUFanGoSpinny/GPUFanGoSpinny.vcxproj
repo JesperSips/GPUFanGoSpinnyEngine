@@ -123,9 +123,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\lib;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)Shaders"
-copy "$(ProjectDir)Shaders\vshader.vs" "$(TargetDir)Shaders"
-copy "$(ProjectDir)Shaders\fshader.fs" "$(TargetDir)Shaders"
+      <Command>xcopy "$(ProjectDir)Shaders\*.*" "$(TargetDir)\Shaders" /Y /I /E
+xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -150,9 +150,9 @@ copy "$(ProjectDir)Shaders\fshader.fs" "$(TargetDir)Shaders"
       <AdditionalLibraryDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\lib;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(TargetDir)Shaders"
-copy "$(ProjectDir)Shaders\vshader.vs" "$(TargetDir)Shaders"
-copy "$(ProjectDir)Shaders\fshader.fs" "$(TargetDir)Shaders"
+      <Command>xcopy "$(ProjectDir)Shaders\*.*" "$(TargetDir)\Shaders" /Y /I /E
+xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "Mesh.h"
 
 Mesh::Mesh()
@@ -72,6 +73,8 @@ void Mesh::CreateTriangle()
     {
         m_indices.push_back(indices[i]);
     }
+
+    m_texture->loadTexture("Assets/meow.jpg", true);
 }
 
 void Mesh::CreateQuad()
@@ -102,6 +105,8 @@ void Mesh::CreateQuad()
     {
         m_indices.push_back(indices[i]);
     }
+
+    m_texture->loadTexture("Assets/meow.jpg", true);
 }
 
 //Original code without indices
@@ -198,4 +203,6 @@ void Mesh::CreateCube()
     {
         m_indices.push_back(indices[i]);
     }
+
+    m_texture->loadTexture("Assets/meow.jpg", true);
 }

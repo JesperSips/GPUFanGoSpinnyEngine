@@ -1,4 +1,6 @@
 #pragma once
+#include "Texture.h"
+
 struct Vertex
 {
 	float pos[3] = { 0,0,0 };
@@ -36,6 +38,9 @@ private:
 
 	// The amount of indices this mesh has 
 	GLuint m_numIndex = 0;
+
+	// Texture class
+	Texture* m_texture = new Texture();
 
 	// Create default meshes
 	void CreateTriangle();
