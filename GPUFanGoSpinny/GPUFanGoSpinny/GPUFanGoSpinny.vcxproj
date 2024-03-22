@@ -114,7 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,7 +139,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
