@@ -43,7 +43,7 @@ void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex), nullptr, GL_STATIC_DRAW);
-
+	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint), nullptr, GL_STATIC_DRAW);
 
@@ -102,15 +102,13 @@ void Renderer::Render()
 		throw;
 	}
 
-	glDrawElements(GL_TRIANGLES, m_mesh->getIndices().size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_mesh->getIndexSize(), GL_UNSIGNED_INT, 0);
 
 	// Check for OpenGL errors
 	while ((error = glGetError()) != GL_NO_ERROR) {
 		std::cerr << "OpenGL error after draw call: " << error << std::endl;
 		throw;
 	}
-
-	glGetError();
 }
 
 void Renderer::Update()
@@ -127,10 +125,5 @@ void Renderer::Terminate()
 void Renderer::AddMesh(Mesh* p_mesh)
 {
 	m_mesh = p_mesh;
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_mesh->getVertexData().size(), m_mesh->getVertexData().data(), GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * m_mesh->getIndices().size(), m_mesh->getIndices().data(), GL_STATIC_DRAW);
+	m_mesh->Bind(m_VBO, m_EBO);
 }

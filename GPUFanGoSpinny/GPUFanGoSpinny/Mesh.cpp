@@ -1,5 +1,5 @@
 #include "pch.h"
-
+#include "VertexBuffer.h"
 #include "Mesh.h"
 
 Mesh::Mesh()
@@ -8,6 +8,8 @@ Mesh::Mesh()
 
 Mesh::Mesh(int p_default)
 {
+    m_vertexBuffer = new VertexBuffer();
+
     switch (p_default)
     {
     case 1:
@@ -24,6 +26,16 @@ Mesh::Mesh(int p_default)
 
 Mesh::~Mesh()
 {
+}
+
+const GLsizei Mesh::getIndexSize()
+{
+    return m_vertexBuffer->GetIndexCount();
+}
+
+void Mesh::Bind(GLuint& p_VBO, GLuint& p_EBO)
+{
+    m_vertexBuffer->Bind(p_VBO, p_EBO);
 }
 
 // Default mesh functions:
@@ -49,10 +61,10 @@ Mesh::~Mesh()
 
 void Mesh::CreateTriangle()
 {
-    m_numVertex = 3;
-    m_numIndex = 3;
+    int numVertex = 3;
+    int numIndex = 3;
 
-    Vertex vertice[] =
+    Vertex vertices[] =
     {
     // positions,       // rgb color      // texcoords
     -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -64,25 +76,19 @@ void Mesh::CreateTriangle()
         0,1,2
     };
 
-    for (UINT i = 0; i < m_numVertex; i++)
-    {
-        m_vertexData.push_back(vertice[i]);
-    }
-
-    for (UINT i = 0; i < m_numIndex; i++)
-    {
-        m_indices.push_back(indices[i]);
-    }
+    m_vertexBuffer->SetData(vertices, numVertex);
+    
+    m_vertexBuffer->SetIndices(indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }
 
 void Mesh::CreateQuad()
 {
-    m_numVertex = 4;
-    m_numIndex = 6;
+    int numVertex = 4;
+    int numIndex = 6;
 
-    Vertex vertice[] =
+    Vertex vertices[] =
     {
     // positions,       // rgb color      // texcoords
      0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, // top right
@@ -96,15 +102,9 @@ void Mesh::CreateQuad()
     1, 2, 3    // second triangle
     };
 
-    for (UINT i = 0; i < m_numVertex; i++)
-    {
-        m_vertexData.push_back(vertice[i]);
-    }
+    m_vertexBuffer->SetData(vertices, numVertex);
 
-    for (UINT i = 0; i < m_numIndex; i++)
-    {
-        m_indices.push_back(indices[i]);
-    }
+    m_vertexBuffer->SetIndices(indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }
@@ -156,8 +156,8 @@ void Mesh::CreateQuad()
 
 void Mesh::CreateCube()
 {
-    m_numVertex = 24;
-    m_numIndex = 36;
+    int numVertex = 24;
+    int numIndex = 36;
 
     Vertex vertices[] = {
     // positions,       // rgb color      // texcoords
@@ -215,15 +215,9 @@ void Mesh::CreateCube()
         22, 23, 20
     };
 
-    for (UINT i = 0; i < m_numVertex; i++)
-    {
-        m_vertexData.push_back(vertices[i]);
-    }
+    m_vertexBuffer->SetData(vertices, numVertex);
 
-    for (UINT i = 0; i < m_numIndex; i++)
-    {
-        m_indices.push_back(indices[i]);
-    }
+    m_vertexBuffer->SetIndices(indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }
