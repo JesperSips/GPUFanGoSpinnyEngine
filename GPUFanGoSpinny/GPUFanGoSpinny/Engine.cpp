@@ -28,6 +28,8 @@ void Engine::Update()
 {
 	while (!m_renderer.IsQuitting())
 	{
+		global::UpdateGlobalValues();
+
 		m_renderer.Update();
 	}
 }

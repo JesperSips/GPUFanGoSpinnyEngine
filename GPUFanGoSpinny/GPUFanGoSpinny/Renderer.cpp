@@ -78,7 +78,7 @@ bool Renderer::IsQuitting()
 
 void Renderer::Render()
 { 
-	model = glm::rotate(model, ((float)glfwGetTime() * 0.0001f) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+	model = glm::rotate(model, global::deltaTime * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 	GLenum error;
 
