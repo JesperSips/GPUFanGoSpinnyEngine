@@ -6,14 +6,14 @@ public:
 	static float deltaTime;
 
 	// frame per second
-	static float FPS;
+	static int FPS;
 
 	static void UpdateGlobalValues();	
 private:
-	static float lastFrameTime;
+	static double lastFrameTime;
 
 	// The time when FPS was last update
-	static float lastFPSTime;
+	static double lastFPSTime;
 	static int frameCount;
 };
 

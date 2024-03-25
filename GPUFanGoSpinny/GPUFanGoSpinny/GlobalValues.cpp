@@ -4,10 +4,10 @@
 // Define global variables
 
 float global::deltaTime = 0.0f;
-float global::FPS = 0.0f;
+int global::FPS = 0;
 
-float global::lastFrameTime = glfwGetTime();
-float global::lastFPSTime = glfwGetTime();
+double global::lastFrameTime = glfwGetTime();
+double global::lastFPSTime = glfwGetTime();
 int global::frameCount = 0;
 
 void global::UpdateGlobalValues()
