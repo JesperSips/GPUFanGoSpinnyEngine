@@ -43,17 +43,11 @@ void ImguiManager::Update()
 	ImGui::NewFrame();
 
 	// Define window
-	static int testCounter = 0;
-
 	ImGui::Begin("Imgui");
-	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-		testCounter++;
-	ImGui::SameLine();
-	ImGui::Text("counter = %d", testCounter);
+	ImGui::Text("Mouse Position X: %.3f Y: %.1f", global::mousePos.x, global::mousePos.y);
+	ImGui::Text("%i FPS", global::FPS);
 	if (ImGui::Button("Close"))
 		glfwSetWindowShouldClose(window, true);
-
-	ImGui::Text("%i FPS", global::FPS);
 	ImGui::End();
 }
 

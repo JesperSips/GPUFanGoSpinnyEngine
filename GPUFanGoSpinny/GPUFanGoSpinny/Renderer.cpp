@@ -90,7 +90,12 @@ void Renderer::Render()
 
 void Renderer::Update()
 {
+	glfwPollEvents();
+
+	// Camera also handles some inputs that affect the window currently
+	m_camera->Update(m_window->GetWindow());
 	m_GUI->Update();
+
 	Render();
 	m_window->Update();
 }

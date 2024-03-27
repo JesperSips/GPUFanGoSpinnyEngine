@@ -6,6 +6,33 @@ void OnWindowResize(GLFWwindow* p_window, int p_width, int p_height)
 	glViewport(0, 0, p_width, p_height);
 }
 
+void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+{
+	float xpos = static_cast<float>(xposIn);
+	float ypos = static_cast<float>(yposIn);
+
+	static bool firstMouse = true;
+	static float lastX = 0;
+	static float lastY = 0;
+
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	xoffset *= global::mouseSensitivity;
+	yoffset *= global::mouseSensitivity;
+
+	global::UpdateMouseOffset(xpos, ypos, xoffset, yoffset);
+}
+
 Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -13,6 +40,7 @@ Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
 	
 	m_window = glfwCreateWindow(p_width, p_height, p_title.c_str(), nullptr, nullptr);
 	glfwSetWindowSizeCallback(m_window, OnWindowResize);
+	glfwSetCursorPosCallback(m_window, MouseCallback);
 
 	if (!m_window)
 	{
@@ -44,7 +72,6 @@ Window::~Window()
 void Window::Update()
 {
 	glfwSwapBuffers(m_window);
-	glfwPollEvents();
 }
 
 bool Window::getIsQuitting() const
