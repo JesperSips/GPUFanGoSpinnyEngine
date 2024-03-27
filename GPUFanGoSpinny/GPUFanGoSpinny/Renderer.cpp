@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#include "ImguiManager.h"
 #include "Mesh.h"
 #include "Window.h"
 #include "Shader.h"
@@ -23,12 +24,15 @@ void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 	}
 
 	m_window = new Window(p_width, p_height, "GPU fan go spinny engine");
-
+	
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "GLEW init failed" << std::endl;
 		throw;
 	}
 
+	m_GUI = new ImguiManager();
+	m_GUI->Initialize(m_window->GetWindow());
+	
 	glViewport(0, 0, p_width, p_height);
 
 	glEnable(GL_DEPTH_TEST);
@@ -109,10 +113,13 @@ void Renderer::Render()
 		std::cerr << "OpenGL error after draw call: " << error << std::endl;
 		throw;
 	}
+
+	m_GUI->Render();
 }
 
 void Renderer::Update()
 {
+	m_GUI->Update();
 	Render();
 	m_window->Update();
 }

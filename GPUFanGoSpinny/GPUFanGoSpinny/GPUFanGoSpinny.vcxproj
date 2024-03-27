@@ -114,7 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,7 +139,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,6 +160,31 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GlobalValues.cpp" />
     <ClCompile Include="GPUFanGoSpinny.cpp" />
+    <ClCompile Include="ImguiManager.cpp" />
+    <ClCompile Include="Lib\imgui\backends\imgui_impl_glfw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\backends\imgui_impl_opengl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -174,6 +199,10 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
   <ItemGroup>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GlobalValues.h" />
+    <ClInclude Include="ImguiManager.h" />
+    <ClInclude Include="Lib\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="Lib\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="Lib\imgui\imgui.h" />
     <ClInclude Include="Lib\stb_image.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="pch.h" />

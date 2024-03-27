@@ -2,6 +2,7 @@
 class Mesh;
 class Shader;
 class Window;
+class ImguiManager;
 class Renderer
 {
 public:
@@ -23,6 +24,8 @@ public:
 
 private:
 	Window* m_window = nullptr;
+
+	ImguiManager* m_GUI = nullptr;
 
 	GLuint m_VBO = 0;
 	GLuint m_EBO = 0;

@@ -11,6 +11,8 @@ public:
 
 	bool getIsQuitting() const;
 
+	inline GLFWwindow* GetWindow() { return m_window; };
+
 private:
 	GLFWwindow* m_window;
 };
