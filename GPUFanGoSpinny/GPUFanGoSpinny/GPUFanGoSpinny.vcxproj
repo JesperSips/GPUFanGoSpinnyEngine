@@ -157,6 +157,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GlobalValues.cpp" />
     <ClCompile Include="GPUFanGoSpinny.cpp" />
@@ -197,6 +198,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GlobalValues.h" />
     <ClInclude Include="ImguiManager.h" />

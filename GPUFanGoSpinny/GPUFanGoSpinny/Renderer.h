@@ -2,6 +2,7 @@
 class Mesh;
 class Shader;
 class Window;
+class Camera;
 class ImguiManager;
 class Renderer
 {
@@ -19,11 +20,11 @@ public:
 	void AddMesh(Mesh* p_mesh);
 
 	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection;
 
 private:
 	Window* m_window = nullptr;
+
+	Camera* m_camera = nullptr;
 
 	ImguiManager* m_GUI = nullptr;
 
