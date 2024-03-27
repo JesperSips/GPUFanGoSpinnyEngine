@@ -82,14 +82,9 @@ VertexBuffer::~VertexBuffer()
 	m_indices.clear();
 }
 
-void VertexBuffer::Bind(GLuint& p_VBO, GLuint& p_EBO)
+void VertexBuffer::Bind()
 {
 	glBindVertexArray(m_VAO);
-	//glBindBuffer(GL_ARRAY_BUFFER, p_VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vertexCount, m_vertexData.data(), GL_STATIC_DRAW);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, p_EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * m_indexCount, m_indices.data(), GL_STATIC_DRAW);
 }
 
 void VertexBuffer::Unbind()

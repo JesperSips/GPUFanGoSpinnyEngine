@@ -15,7 +15,7 @@ public:
 
 	const GLsizei getIndexSize();
 
-	void Bind(GLuint& p_VBO, GLuint& p_EBO);
+	void Bind();
 
 private:
 	// Number used to identify mesh

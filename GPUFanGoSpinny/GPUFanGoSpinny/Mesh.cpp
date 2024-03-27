@@ -8,8 +8,6 @@ Mesh::Mesh()
 
 Mesh::Mesh(int p_default)
 {
-    m_vertexBuffer = new VertexBuffer();
-
     switch (p_default)
     {
     case 1:
@@ -33,9 +31,9 @@ const GLsizei Mesh::getIndexSize()
     return m_vertexBuffer->GetIndexCount();
 }
 
-void Mesh::Bind(GLuint& p_VBO, GLuint& p_EBO)
+void Mesh::Bind()
 {
-    m_vertexBuffer->Bind(p_VBO, p_EBO);
+    m_vertexBuffer->Bind();
 }
 
 // Default mesh functions:
@@ -76,9 +74,7 @@ void Mesh::CreateTriangle()
         0,1,2
     };
 
-    m_vertexBuffer->SetData(vertices, numVertex);
-    
-    m_vertexBuffer->SetIndices(indices, numIndex);
+    m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }
@@ -102,9 +98,7 @@ void Mesh::CreateQuad()
     1, 2, 3    // second triangle
     };
 
-    m_vertexBuffer->SetData(vertices, numVertex);
-
-    m_vertexBuffer->SetIndices(indices, numIndex);
+    m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }
@@ -215,9 +209,7 @@ void Mesh::CreateCube()
         22, 23, 20
     };
 
-    m_vertexBuffer->SetData(vertices, numVertex);
-
-    m_vertexBuffer->SetIndices(indices, numIndex);
+    m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
     m_texture->loadTexture("Assets/meow.jpg", true);
 }

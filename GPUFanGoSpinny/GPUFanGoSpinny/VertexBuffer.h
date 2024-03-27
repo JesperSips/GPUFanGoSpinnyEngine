@@ -9,7 +9,7 @@ public:
     VertexBuffer();
     ~VertexBuffer();
 
-    void Bind(GLuint& p_VBO, GLuint& p_EBO);
+    void Bind();
     void Unbind();
 
     void SetData(Vertex* data, GLsizei p_count);

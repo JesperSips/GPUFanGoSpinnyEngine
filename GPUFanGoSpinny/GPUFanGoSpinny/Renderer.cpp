@@ -37,36 +37,6 @@ void Renderer::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
 	glEnable(GL_DEPTH_TEST);
 
-	GLuint VBO = 0, EBO = 0, VAO = 0;
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glGenVertexArrays(1, &VAO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex), nullptr, GL_STATIC_DRAW);
-	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint), nullptr, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// RGB attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	m_VBO = VBO;
-	m_EBO = EBO;
-	m_VAO = VAO;
-
 	m_shader = new Shader("Shaders/vshader.vs", "Shaders/fshader.fs");
 
 	// Temporary transformation code
@@ -132,5 +102,5 @@ void Renderer::Terminate()
 void Renderer::AddMesh(Mesh* p_mesh)
 {
 	m_mesh = p_mesh;
-	m_mesh->Bind(m_VBO, m_EBO);
+	m_mesh->Bind();
 }

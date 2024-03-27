@@ -27,10 +27,6 @@ private:
 
 	ImguiManager* m_GUI = nullptr;
 
-	GLuint m_VBO = 0;
-	GLuint m_EBO = 0;
-	GLuint m_VAO = 0;
-
 	Shader* m_shader = nullptr;
 
 	// The mesh that will be drawn to the screen, currently this is only one mesh, later this will be an array of meshes
