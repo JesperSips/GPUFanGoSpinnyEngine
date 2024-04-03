@@ -34,6 +34,18 @@
     <Filter Include="Source Files\External">
       <UniqueIdentifier>{69abd8a1-8fa6-483a-915e-ce7ea993a1a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Graphics\OpenGL">
+      <UniqueIdentifier>{9c6642ce-4ec4-431f-8aa5-84c52f2a4ca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\DirectX12">
+      <UniqueIdentifier>{4e8f45c2-1128-47cc-8424-c534c7b0eaed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\OpenGL">
+      <UniqueIdentifier>{70e56961-c5bc-4ba7-b367-68df5213481b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\DirectX12">
+      <UniqueIdentifier>{96b1dcb9-9e97-4869-ac1e-3b3dab4c986a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GPUFanGoSpinny.cpp">
@@ -50,24 +62,6 @@
     </ClCompile>
     <ClCompile Include="ImguiManager.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexBuffer.cpp">
-      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Lib\imgui\imgui.cpp">
       <Filter>Source Files\External</Filter>
@@ -87,6 +81,27 @@
     <ClCompile Include="Lib\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>Source Files\External</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalValues.h">
@@ -97,24 +112,6 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ImguiManager.h">
       <Filter>Header Files\Engine</Filter>
@@ -130,6 +127,27 @@
     </ClInclude>
     <ClInclude Include="Lib\imgui\backends\imgui_impl_opengl3.h">
       <Filter>Header Files\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\Graphics\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

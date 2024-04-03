@@ -6,8 +6,14 @@
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hInstPrev, _In_ LPWSTR cmdline, _In_ int cmdshow)
 {
+#ifdef OpenGL
 	Engine engine;
 	engine.Initialize(hInst);
+#endif
+
+#ifdef DX12
+	printf("fuck you");
+#endif
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
