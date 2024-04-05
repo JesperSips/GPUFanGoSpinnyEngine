@@ -1,7 +1,14 @@
 #include "pch.h"
 #include "Mesh.h"
-#include "RendererDX.h"
+
+#ifdef OpenGL
 #include "RendererGL.h"
+#endif
+
+#ifdef DX12
+#include "RendererDX.h"
+#endif
+
 #include "Engine.h"
 
 Engine::Engine()
