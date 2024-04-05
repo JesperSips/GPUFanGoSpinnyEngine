@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Mesh.h"
+#include "RendererDX.h"
+#include "RendererGL.h"
 #include "Engine.h"
 
 Engine::Engine()
@@ -12,10 +14,20 @@ Engine::~Engine()
 
 void Engine::Initialize(HINSTANCE p_hInstance)
 {
-	m_renderer.Initialize(p_hInstance, 500, 500);
+
+#ifdef OpenGL
+	m_renderer = new RendererGL();
+#endif
+
+
+#ifdef DX12
+	m_renderer = new RendererDX();
+#endif
+
+	m_renderer->Initialize(p_hInstance, 500, 500);
 
 	Mesh* mesh = new Mesh(3);
-	m_renderer.AddMesh(mesh);
+	m_renderer->AddMesh(mesh);
 
 	// Update loop starts here, make sure to initialize everything beforehand
 
@@ -26,14 +38,14 @@ void Engine::Initialize(HINSTANCE p_hInstance)
 
 void Engine::Update()
 {
-	while (!m_renderer.IsQuitting())
+	while (!m_renderer->IsQuitting())
 	{
 		global::UpdateGlobalValues();
-		m_renderer.Update();
+		m_renderer->Update();
 	}
 }
 
 void Engine::Terminate()
 {
-	m_renderer.Terminate();
+	m_renderer->Terminate();
 }

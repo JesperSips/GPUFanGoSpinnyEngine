@@ -21,12 +21,27 @@ struct Vertex
 #include <string>
 #include <vector>
 
+// OpenGL specific headers, currently commented out to avoid errors
+//#ifdef OpenGL
 //#define GLEW_STATIC
 #include <glew.h>
+//#endif
+
+// DirectX12 specific headers
+#ifdef DX12
+#include <d3d12.h>
+#include <dxgi1_6.h>
+#include <d3dcompiler.h>
+
+#include <DirectXMath.h>
+#endif
+
 #include "GLFW/glfw3.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+
+#include <wrl.h>
 
 #include "GlobalValues.h"

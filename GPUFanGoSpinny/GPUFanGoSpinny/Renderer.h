@@ -8,14 +8,14 @@ class Renderer
 {
 public:
 	Renderer();
-	~Renderer();
+	virtual ~Renderer();
 
-	void Initialize(HINSTANCE p_hInstance, int p_width, int p_height);
+	virtual void Initialize(HINSTANCE p_hInstance, int p_width, int p_height);
 	
 	bool IsQuitting();
 
-	void Update();
-	void Terminate();
+	virtual void Update();
+	virtual void Terminate();
 
 	void AddMesh(Mesh* p_mesh);
 
@@ -33,6 +33,6 @@ private:
 	// The mesh that will be drawn to the screen, currently this is only one mesh, later this will be an array of meshes
 	Mesh* m_mesh = nullptr;
 
-	void Render();
+	virtual void Render();
 };
 

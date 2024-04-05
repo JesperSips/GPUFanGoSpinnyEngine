@@ -12,6 +12,6 @@ public:
 	void Update();
 	void Terminate();
 private:
-	Renderer m_renderer;
+	Renderer* m_renderer = nullptr;
 };
 
