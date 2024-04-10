@@ -4,6 +4,7 @@
 #include "Renderer.h"
 using namespace Microsoft::WRL;
 
+class ImguiManager;
 class RendererDX:
 	public Renderer
 {
@@ -19,6 +20,8 @@ public:
 	void Resize(int p_width, int p_height);
 
 private:
+	friend class ImguiManager;
+
 	// The number of swap chain back buffers.
 	static const uint8_t g_NumFrames = 3;
 

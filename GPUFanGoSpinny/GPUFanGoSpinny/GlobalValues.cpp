@@ -14,6 +14,8 @@ double global::lastFrameTime = glfwGetTime();
 double global::lastFPSTime = glfwGetTime();
 int global::frameCount = 0;
 
+FLOAT global::clearColor[] = {0.9f, 0.8f, 1.0f, 1.0f};
+
 // This gets called in the main Update loop in Engine.cpp
 void global::UpdateGlobalValues()
 {

@@ -60,9 +60,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="ImguiManager.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Lib\imgui\imgui.cpp">
       <Filter>Source Files\External</Filter>
     </ClCompile>
@@ -108,15 +105,21 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="ImguiManagerGL.cpp">
+      <Filter>Source Files\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiManagerDX.cpp">
+      <Filter>Source Files\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\imgui\backends\imgui_impl_dx12.cpp">
+      <Filter>Source Files\External</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalValues.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ImguiManager.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Lib\stb_image.h">
@@ -159,6 +162,12 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\imgui\backends\imgui_impl_dx12.h">
+      <Filter>Header Files\External</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiManager.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

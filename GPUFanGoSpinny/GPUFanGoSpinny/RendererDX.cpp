@@ -26,6 +26,7 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
     debugInterface->EnableDebugLayer();
 #endif
 
+    // Non-DirectX12 initialization code
     if (glfwInit() != GLFW_TRUE) {
         std::cerr << "GLFW init failed" << std::endl;
         throw;
@@ -33,6 +34,9 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
     m_window = new Window(*this, p_width, p_height, "GPU fan go spinny engine");
 
+    //m_GUI = new ImguiManager();
+
+    // The nightmare begins
     ComPtr<IDXGIAdapter4> dxgiAdapter4 = GetAdapter(g_UseWarp);
 
     g_Device = CreateDevice(dxgiAdapter4);
@@ -56,11 +60,16 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
     g_Fence = CreateFence(g_Device);
     g_FenceEvent = CreateEventHandle();
+
+    // Imgui needs DX12 objects, so initialize it after everything else
+    //m_GUI->Initialize(*m_window->GetWindow(), *this);
 }
 
 void RendererDX::Update()
 {
     glfwPollEvents();
+
+    //m_GUI->Update();
 
     Render();
     m_window->Update();
@@ -351,11 +360,10 @@ void RendererDX::Render()
 
     g_CommandList->ResourceBarrier(1, &barrier);
 
-    FLOAT clearColor[] = { 0.4f, 0.6f, 0.9f, 1.0f };
     D3D12_CPU_DESCRIPTOR_HANDLE rtv;
     rtv.ptr = g_RTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart().ptr + g_CurrentBackBufferIndex * g_RTVDescriptorSize;
 
-    g_CommandList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
+    g_CommandList->ClearRenderTargetView(rtv, global::clearColor, 0, nullptr);
 
     // Present
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;

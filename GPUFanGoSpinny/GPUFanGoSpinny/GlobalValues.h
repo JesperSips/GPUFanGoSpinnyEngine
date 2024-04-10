@@ -14,6 +14,8 @@ public:
 	// Current position of the mouse
 	static glm::vec2 mousePos;
 
+	static FLOAT clearColor[4];
+
 	static float mouseSensitivity;
 
 	static void UpdateGlobalValues();	

@@ -1,12 +1,14 @@
 #include "pch.h"
 
+#include "Renderer.h"
+
 #include "imgui.h"
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
 #include "ImguiManager.h"
 
-static GLFWwindow* window = nullptr;
+static GLFWwindow* windowPtr = nullptr;
 
 ImguiManager::ImguiManager()
 {
@@ -16,16 +18,16 @@ ImguiManager::~ImguiManager()
 {
 }
 
-void ImguiManager::Initialize(GLFWwindow* p_window)
+void ImguiManager::Initialize(GLFWwindow& p_window, Renderer& p_ref)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();	
 	ImGui::StyleColorsDark();
 
-	ImGui_ImplGlfw_InitForOpenGL(p_window, true);
+	ImGui_ImplGlfw_InitForOpenGL(&p_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	window = p_window;
+	windowPtr = &p_window;
 }
 
 void ImguiManager::Terminate()
@@ -47,7 +49,7 @@ void ImguiManager::Update()
 	ImGui::Text("Mouse Position X: %.3f Y: %.1f", global::mousePos.x, global::mousePos.y);
 	ImGui::Text("%i FPS", global::FPS);
 	if (ImGui::Button("Close"))
-		glfwSetWindowShouldClose(window, true);
+		glfwSetWindowShouldClose(windowPtr, true);
 	ImGui::End();
 }
 

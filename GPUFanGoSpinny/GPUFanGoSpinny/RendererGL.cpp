@@ -34,7 +34,7 @@ void RendererGL::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 	m_camera = new Camera(float(p_width / p_height), 80.f);
 
 	m_GUI = new ImguiManager();
-	m_GUI->Initialize(m_window->GetWindow());
+	m_GUI->Initialize(*m_window->GetWindow(), *this);
 
 	glViewport(0, 0, p_width, p_height);
 
@@ -74,7 +74,8 @@ void RendererGL::Render()
 
 	GLenum error;
 
-	glClearColor(0.9f, 0.8f, 1.0f, 1.0f);
+	// TODO find more effective way to do this
+	glClearColor(global::clearColor[0], global::clearColor[1], global::clearColor[2], global::clearColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_shader->use();
