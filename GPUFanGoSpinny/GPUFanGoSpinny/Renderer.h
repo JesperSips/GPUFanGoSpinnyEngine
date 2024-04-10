@@ -22,6 +22,8 @@ public:
 	void AddMesh(Mesh* p_mesh);
 #endif
 
+	virtual void Resize(int p_width, int p_height) = 0;
+
 protected:
 	Window* m_window = nullptr;
 

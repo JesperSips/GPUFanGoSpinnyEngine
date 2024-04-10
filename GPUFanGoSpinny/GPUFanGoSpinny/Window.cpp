@@ -1,9 +1,12 @@
 #include "pch.h"
+#include "Renderer.h"
 #include "Window.h"
+
+static Renderer* rendererPtr;
 
 void OnWindowResize(GLFWwindow* p_window, int p_width, int p_height)
 {
-	glViewport(0, 0, p_width, p_height);
+	rendererPtr->Resize(p_width, p_height);
 }
 
 void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
@@ -31,10 +34,12 @@ void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 	yoffset *= global::mouseSensitivity;
 
 	global::UpdateMouseOffset(xpos, ypos, xoffset, yoffset);
-}
+}	
 
-Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
+Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, std::string p_title)
 {
+	rendererPtr = &p_ref;
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	

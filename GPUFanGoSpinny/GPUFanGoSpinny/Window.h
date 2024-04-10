@@ -1,10 +1,11 @@
 #pragma once
 struct GLFWwindow;
 
+class Renderer;
 class Window
 {
 public:
-	Window(UINT32 p_width, UINT32 p_height, std::string p_title);
+	Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, std::string p_title);
 	~Window();
 
 	void Update();
@@ -16,5 +17,6 @@ public:
 	inline GLFWwindow* GetWindow() { return m_window; };
 
 private:
+
 	GLFWwindow* m_window;
 };

@@ -31,7 +31,7 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
         throw;
     }
 
-    m_window = new Window(p_width, p_height, "GPU fan go spinny engine");
+    m_window = new Window(*this, p_width, p_height, "GPU fan go spinny engine");
 
     ComPtr<IDXGIAdapter4> dxgiAdapter4 = GetAdapter(g_UseWarp);
 
@@ -74,6 +74,27 @@ void RendererDX::Terminate()
     ::CloseHandle(g_FenceEvent);
 
     glfwTerminate();
+}
+
+void RendererDX::Resize(int p_width, int p_height)
+{
+    Flush(g_CommandQueue, g_Fence, g_FenceValue, g_FenceEvent);
+
+    for (int i = 0; i < g_NumFrames; ++i)
+    {
+        // Any references to the back buffers must be released
+        // before the swap chain can be resized.
+        g_BackBuffers[i].Reset();
+        g_FrameFenceValues[i] = g_FrameFenceValues[g_CurrentBackBufferIndex];
+    }
+
+    DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+    g_SwapChain->GetDesc(&swapChainDesc);
+    g_SwapChain->ResizeBuffers(g_NumFrames, p_width, p_height, swapChainDesc.BufferDesc.Format, swapChainDesc.Flags);
+
+    g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
+
+    UpdateRenderTargetViews(g_Device, g_SwapChain, g_RTVDescriptorHeap);
 }
 
 ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)

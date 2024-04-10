@@ -24,7 +24,7 @@ void RendererGL::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 		throw;
 	}
 
-	m_window = new Window(p_width, p_height, "GPU fan go spinny engine");
+	m_window = new Window(*this, p_width, p_height, "GPU fan go spinny engine");
 
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "GLEW init failed" << std::endl;
@@ -61,6 +61,11 @@ void RendererGL::Update()
 void RendererGL::Terminate()
 {
 	glfwTerminate();
+}
+
+void RendererGL::Resize(int p_width, int p_height)
+{
+	glViewport(0, 0, p_width, p_height);
 }
 
 void RendererGL::Render()

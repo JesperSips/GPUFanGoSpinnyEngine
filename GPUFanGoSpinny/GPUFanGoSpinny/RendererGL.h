@@ -12,6 +12,8 @@ public:
 	void Update();
 	void Terminate();
 
+	void Resize(int p_width, int p_height);
+
 	glm::mat4 model = glm::mat4(1.0f);
 
 protected:

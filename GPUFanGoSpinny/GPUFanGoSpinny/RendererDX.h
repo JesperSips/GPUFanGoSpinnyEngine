@@ -16,6 +16,8 @@ public:
 	void Update();
 	void Terminate();
 
+	void Resize(int p_width, int p_height);
+
 private:
 	// The number of swap chain back buffers.
 	static const uint8_t g_NumFrames = 3;
