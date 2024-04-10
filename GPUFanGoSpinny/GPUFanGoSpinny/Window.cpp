@@ -39,6 +39,7 @@ Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	
 	m_window = glfwCreateWindow(p_width, p_height, p_title.c_str(), nullptr, nullptr);
+
 	glfwSetWindowSizeCallback(m_window, OnWindowResize);
 	glfwSetCursorPosCallback(m_window, MouseCallback);
 
@@ -55,13 +56,6 @@ Window::Window(UINT32 p_width, UINT32 p_height, std::string p_title)
 	std::cout << "OpenGL context version: " << major << "." << minor << std::endl;
 
 	glfwMakeContextCurrent(m_window);
-	// Check for errors after making context current
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		std::cerr << "Error making OpenGL context current: " << error << std::endl;
-		throw;
-	}
 }
 
 Window::~Window()
@@ -77,4 +71,13 @@ void Window::Update()
 bool Window::getIsQuitting() const
 {
 	return glfwWindowShouldClose(m_window);
+}
+
+HWND Window::GetWin32Window() const
+{
+	HWND hwnd = glfwGetWin32Window(m_window);
+	if (!hwnd) {
+		throw;
+	}
+	return hwnd;
 }

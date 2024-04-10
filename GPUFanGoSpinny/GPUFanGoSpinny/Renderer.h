@@ -10,16 +10,17 @@ public:
 	Renderer();
 	virtual ~Renderer();
 
-	virtual void Initialize(HINSTANCE p_hInstance, int p_width, int p_height);
+	virtual void Initialize(HINSTANCE p_hInstance, int p_width, int p_height) = 0;
 	
 	bool IsQuitting();
 
-	virtual void Update();
-	virtual void Terminate();
+	virtual void Update() = 0;
+	virtual void Terminate() = 0;
 
+	// ifdef OpenGL here is really bad, but it was the easiest way to fix the error for now
+#ifdef OpenGL
 	void AddMesh(Mesh* p_mesh);
-
-	glm::mat4 model = glm::mat4(1.0f);
+#endif
 
 protected:
 	Window* m_window = nullptr;
@@ -30,9 +31,10 @@ protected:
 
 	Shader* m_shader = nullptr;
 
+#ifdef OpenGL
 	// The mesh that will be drawn to the screen, currently this is only one mesh, later this will be an array of meshes
 	Mesh* m_mesh = nullptr;
-
-	virtual void Render();
+#endif
+	virtual void Render() = 0;
 };
 

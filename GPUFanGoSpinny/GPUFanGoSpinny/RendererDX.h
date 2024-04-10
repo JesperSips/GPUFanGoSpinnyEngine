@@ -1,3 +1,5 @@
+// Most code in here is from Learning DirectX12 
+// By Jeremiah van Oosten https://www.3dgep.com/learning-directx-12-1/#DirectX_12_Demo 
 #pragma once
 #include "Renderer.h"
 using namespace Microsoft::WRL;
@@ -17,6 +19,7 @@ public:
 private:
 	// The number of swap chain back buffers.
 	static const uint8_t g_NumFrames = 3;
+
 	// Use WARP adapter
 	bool g_UseWarp = false;
 

@@ -32,14 +32,48 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
     }
 
     m_window = new Window(p_width, p_height, "GPU fan go spinny engine");
+
+    ComPtr<IDXGIAdapter4> dxgiAdapter4 = GetAdapter(g_UseWarp);
+
+    g_Device = CreateDevice(dxgiAdapter4);
+
+    g_CommandQueue = CreateCommandQueue(g_Device, D3D12_COMMAND_LIST_TYPE_DIRECT);
+
+    g_SwapChain = CreateSwapChain(m_window->GetWin32Window(), g_CommandQueue, p_width, p_height, g_NumFrames);
+
+    g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
+
+    g_RTVDescriptorHeap = CreateDescriptorHeap(g_Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, g_NumFrames);
+    g_RTVDescriptorSize = g_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+    UpdateRenderTargetViews(g_Device, g_SwapChain, g_RTVDescriptorHeap);
+
+    for (int i = 0; i < g_NumFrames; ++i)
+    {
+        g_CommandAllocators[i] = CreateCommandAllocator(g_Device, D3D12_COMMAND_LIST_TYPE_DIRECT);
+    }
+    g_CommandList = CreateCommandList(g_Device, g_CommandAllocators[g_CurrentBackBufferIndex], D3D12_COMMAND_LIST_TYPE_DIRECT);
+
+    g_Fence = CreateFence(g_Device);
+    g_FenceEvent = CreateEventHandle();
 }
 
 void RendererDX::Update()
 {
+    glfwPollEvents();
+
+    Render();
+    m_window->Update();
 }
 
 void RendererDX::Terminate()
 {
+    // Make sure the command queue has finished all commands before closing.
+    Flush(g_CommandQueue, g_Fence, g_FenceValue, g_FenceEvent);
+
+    ::CloseHandle(g_FenceEvent);
+
+    glfwTerminate();
 }
 
 ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)
@@ -286,6 +320,7 @@ void RendererDX::Render()
     commandAllocator->Reset();
     g_CommandList->Reset(commandAllocator.Get(), nullptr);
 
+    // Clear render target
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -300,4 +335,26 @@ void RendererDX::Render()
     rtv.ptr = g_RTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart().ptr + g_CurrentBackBufferIndex * g_RTVDescriptorSize;
 
     g_CommandList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
+
+    // Present
+    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+    barrier.Transition.StateAfter =D3D12_RESOURCE_STATE_PRESENT;
+
+    g_CommandList->ResourceBarrier(1, &barrier);
+
+    g_CommandList->Close();
+
+    ID3D12CommandList* const commandLists[] = {
+        g_CommandList.Get()
+    };
+    g_CommandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
+
+    g_SwapChain->Present(0, 0);
+
+    g_FrameFenceValues[g_CurrentBackBufferIndex] = Signal(g_CommandQueue, g_Fence, g_FenceValue);
+
+
+    g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
+
+    WaitForFenceValue(g_Fence, g_FrameFenceValues[g_CurrentBackBufferIndex], g_FenceEvent);
 }

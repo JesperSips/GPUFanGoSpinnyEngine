@@ -11,6 +11,8 @@ public:
 
 	bool getIsQuitting() const;
 
+	HWND GetWin32Window() const;
+
 	inline GLFWwindow* GetWindow() { return m_window; };
 
 private:

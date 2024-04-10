@@ -33,8 +33,10 @@ void Engine::Initialize(HINSTANCE p_hInstance)
 
 	m_renderer->Initialize(p_hInstance, 500, 500);
 
+#ifdef OpenGL
 	Mesh* mesh = new Mesh(3);
 	m_renderer->AddMesh(mesh);
+#endif
 
 	// Update loop starts here, make sure to initialize everything beforehand
 

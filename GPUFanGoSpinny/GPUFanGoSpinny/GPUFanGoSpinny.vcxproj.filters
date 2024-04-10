@@ -81,9 +81,6 @@
     <ClCompile Include="Lib\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>Source Files\External</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RendererDX.cpp">
       <Filter>Source Files\Graphics\DirectX12</Filter>
     </ClCompile>
@@ -108,6 +105,9 @@
     <ClCompile Include="RendererGL.cpp">
       <Filter>Source Files\Graphics\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalValues.h">
@@ -130,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="Lib\imgui\backends\imgui_impl_opengl3.h">
       <Filter>Header Files\External</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\Engine</Filter>
@@ -159,6 +156,9 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,10 +22,10 @@ struct Vertex
 #include <vector>
 
 // OpenGL specific headers, currently commented out to avoid errors
-//#ifdef OpenGL
+#ifdef OpenGL
 //#define GLEW_STATIC
 #include <glew.h>
-//#endif
+#endif
 
 // DirectX12 specific headers
 #ifdef DX12
@@ -36,7 +36,10 @@ struct Vertex
 #include <DirectXMath.h>
 #endif
 
+#define GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_NATIVE_INCLUDE_NONE
 #include "GLFW/glfw3.h"
+#include <GLFW/glfw3native.h>
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
