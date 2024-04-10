@@ -21,7 +21,7 @@ public:
 
 	glm::mat4 model = glm::mat4(1.0f);
 
-private:
+protected:
 	Window* m_window = nullptr;
 
 	Camera* m_camera = nullptr;
