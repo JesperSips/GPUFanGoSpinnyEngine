@@ -28,7 +28,7 @@ static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 	global::UpdateMouseOffset(xpos, ypos, xoffset, yoffset);
 }	
 
-Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, std::string p_title)
+Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, const std::string& p_title)
 {
 	rendererPtr = &p_ref;
 

@@ -6,7 +6,7 @@ Texture::Texture()
 {
 }
 
-void Texture::loadTexture(const char* p_filePath, bool p_flipTexture)
+void Texture::loadTexture(const std::string& p_filePath, bool p_flipTexture)
 {
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -26,7 +26,7 @@ void Texture::loadTexture(const char* p_filePath, bool p_flipTexture)
 
 	// Load and generate texture
 	int width, height, nrChannels;
-	m_data = stbi_load(p_filePath, &width, &height, &nrChannels, 0);
+	m_data = stbi_load(p_filePath.c_str(), &width, &height, &nrChannels, 0);
 	if (m_data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_data);

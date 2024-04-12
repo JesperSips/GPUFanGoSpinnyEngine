@@ -5,7 +5,7 @@
 
 #include "Shader.h"
 
-Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath)
+Shader::Shader(const std::string& p_vertexPath, const std::string& p_fragmentPath)
 {
 	// Read shader files
 	std::string vertexCode;

@@ -4,7 +4,7 @@ class Texture
 public:
 	Texture();
 
-	void loadTexture(const char* p_filePath, bool p_flipTexture);
+	void loadTexture(const std::string& p_filePath, bool p_flipTexture);
 
 private:
 	unsigned char* m_data = nullptr;

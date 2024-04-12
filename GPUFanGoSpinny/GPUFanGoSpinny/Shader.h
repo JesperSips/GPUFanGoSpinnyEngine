@@ -8,7 +8,7 @@ public:
 	GLuint m_ID = 0;
 
 	// constructor reads and builds shaders from filepaths
-	Shader(const char* p_vertexPath, const char* p_fragmentPath);
+	Shader(const std::string& p_vertexPath, const std::string& p_fragmentPath);
 	
 	// use/activate the shader
 	void use();
