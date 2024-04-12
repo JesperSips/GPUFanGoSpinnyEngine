@@ -5,7 +5,7 @@
 
 #include "Shader.h"
 
-Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath)
+Shader::Shader(const std::string& p_vertexPath, const std::string& p_fragmentPath)
 {
 	// Read shader files
 	std::string vertexCode;
@@ -73,6 +73,7 @@ Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath)
 	glAttachShader(m_ID, fragment);
 	glLinkProgram(m_ID);
 	// print linking errors if any
+
 	glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
 	if (!success)
 	{
@@ -80,9 +81,16 @@ Shader::Shader(const char* p_vertexPath, const char* p_fragmentPath)
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 
+	glValidateProgram(m_ID);
+
 	// delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+Shader::~Shader()
+{
+	glDeleteProgram(m_ID);
 }
 
 void Shader::use()

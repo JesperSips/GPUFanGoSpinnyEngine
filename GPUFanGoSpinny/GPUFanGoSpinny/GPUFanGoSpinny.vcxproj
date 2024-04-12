@@ -304,8 +304,8 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
     <ClCompile Include="ImguiManagerDX.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ImguiManagerGL.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
@@ -421,13 +421,14 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBuffer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>

@@ -17,9 +17,10 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	delete m_renderer;
 }
 
-void Engine::Initialize(HINSTANCE p_hInstance)
+void Engine::Initialize()
 {
 
 #ifdef OpenGL
@@ -31,7 +32,7 @@ void Engine::Initialize(HINSTANCE p_hInstance)
 	m_renderer = new RendererDX();
 #endif
 
-	m_renderer->Initialize(p_hInstance, 500, 500);
+	m_renderer->Initialize(500, 500);
 
 #ifdef OpenGL
 	Mesh* mesh = new Mesh(3);

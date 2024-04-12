@@ -7,7 +7,7 @@ public:
 	Engine();
 	~Engine();
 
-	void Initialize(HINSTANCE p_hInstance);
+	void Initialize();
 
 	void Update();
 	void Terminate();

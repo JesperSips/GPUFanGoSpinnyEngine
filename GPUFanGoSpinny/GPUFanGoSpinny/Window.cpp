@@ -4,26 +4,18 @@
 
 static Renderer* rendererPtr;
 
-void OnWindowResize(GLFWwindow* p_window, int p_width, int p_height)
+static void OnWindowResize(GLFWwindow* p_window, int p_width, int p_height)
 {
 	rendererPtr->Resize(p_width, p_height);
 }
 
-void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
 	float xpos = static_cast<float>(xposIn);
 	float ypos = static_cast<float>(yposIn);
 
-	static bool firstMouse = true;
-	static float lastX = 0;
-	static float lastY = 0;
-
-	if (firstMouse)
-	{
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
+	static float lastX = xpos;
+	static float lastY = ypos;
 
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;
@@ -36,7 +28,7 @@ void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 	global::UpdateMouseOffset(xpos, ypos, xoffset, yoffset);
 }	
 
-Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, std::string p_title)
+Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, const std::string& p_title)
 {
 	rendererPtr = &p_ref;
 

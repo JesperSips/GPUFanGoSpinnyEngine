@@ -19,9 +19,6 @@ public:
     GLsizei GetIndexCount() const { return m_indexCount; }
 
 private:
-    std::vector<Vertex>	 m_vertexData;
-    std::vector<GLuint> m_indices;
-
     GLsizei m_vertexCount = 0;
     GLsizei m_indexCount = 0;
 
