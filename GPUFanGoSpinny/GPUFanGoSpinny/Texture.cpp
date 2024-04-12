@@ -40,3 +40,8 @@ Texture::Texture(const std::string& p_filePath, bool p_flipTexture):Texture()
 
 	stbi_image_free(m_data);
 }
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &m_texture);
+}

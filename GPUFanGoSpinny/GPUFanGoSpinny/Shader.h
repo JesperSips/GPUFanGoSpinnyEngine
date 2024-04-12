@@ -10,6 +10,9 @@ public:
 	// constructor reads and builds shaders from filepaths
 	Shader(const std::string& p_vertexPath, const std::string& p_fragmentPath);
 	
+	// destructor deletes program
+	~Shader();
+
 	// use/activate the shader
 	void use();
 
