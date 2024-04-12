@@ -8,7 +8,6 @@ public:
 	~Texture();
 
 private:
-	unsigned char* m_data = nullptr;
 
 	GLuint m_texture = 0;
 };

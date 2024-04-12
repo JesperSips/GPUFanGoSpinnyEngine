@@ -17,9 +17,9 @@ Renderer::~Renderer()
 	delete m_window;
 	delete m_camera;
 	delete m_GUI;
-	delete m_shader;
 
 #ifdef OpenGL
+	delete m_shader;
 	delete m_mesh;
 #endif
 }

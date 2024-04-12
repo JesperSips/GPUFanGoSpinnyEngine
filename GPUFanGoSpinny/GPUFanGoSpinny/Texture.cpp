@@ -26,10 +26,10 @@ Texture::Texture(const std::string& p_filePath, bool p_flipTexture):Texture()
 
 	// Load and generate texture
 	int width, height, nrChannels;
-	m_data = stbi_load(p_filePath.c_str(), &width, &height, &nrChannels, 0);
-	if (m_data)
+	unsigned char* data = stbi_load(p_filePath.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 	}
@@ -38,7 +38,7 @@ Texture::Texture(const std::string& p_filePath, bool p_flipTexture):Texture()
 		throw;
 	}
 
-	stbi_image_free(m_data);
+	stbi_image_free(data);
 }
 
 Texture::~Texture()
