@@ -1,4 +1,5 @@
 #pragma once
+
 class Mesh;
 class Shader;
 class Window;
@@ -25,6 +26,7 @@ public:
 	virtual void Resize(int p_width, int p_height) = 0;
 
 protected:
+
 	Window* m_window = nullptr;
 
 	Camera* m_camera = nullptr;
@@ -38,5 +40,8 @@ protected:
 	Mesh* m_mesh = nullptr;
 #endif
 	virtual void Render() = 0;
+
+	glm::vec4 m_clearColor = { 0.9f, 0.8f, 1.0f, 1.0f };
+
 };
 

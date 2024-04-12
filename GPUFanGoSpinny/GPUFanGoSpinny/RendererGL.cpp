@@ -52,7 +52,7 @@ void RendererGL::Update()
 
 	// Camera also handles some inputs that affect the window currently
 	m_camera->Update(m_window->GetWindow());
-	m_GUI->Update();
+	m_GUI->Update(m_clearColor);
 
 	Render();
 	m_window->Update();
@@ -74,8 +74,7 @@ void RendererGL::Render()
 
 	GLenum error;
 
-	// TODO find more effective way to do this
-	glClearColor(global::clearColor[0], global::clearColor[1], global::clearColor[2], global::clearColor[3]);
+	glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_shader->use();

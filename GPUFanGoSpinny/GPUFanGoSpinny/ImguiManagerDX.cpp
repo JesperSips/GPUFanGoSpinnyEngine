@@ -48,7 +48,7 @@ void ImguiManager::Terminate()
 	ImGui::DestroyContext();
 }
 
-void ImguiManager::Update()
+void ImguiManager::Update(glm::vec4& p_clearColor)
 {
 	// Create frame
 	ImGui_ImplDX12_NewFrame();
@@ -57,6 +57,8 @@ void ImguiManager::Update()
 
 	// Define window
 	ImGui::Begin("Imgui");
+	ImGui::Text("Press P to control camera");
+	ImGui::Text("Press O to control mouse");
 	ImGui::Text("Mouse Position X: %.3f Y: %.1f", global::mousePos.x, global::mousePos.y);
 	ImGui::Text("%i FPS", global::FPS);
 	if (ImGui::Button("Close"))
