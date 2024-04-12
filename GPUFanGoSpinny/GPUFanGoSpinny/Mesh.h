@@ -1,7 +1,7 @@
 #pragma once
-#include "Texture.h"
 
 class VertexBuffer;
+class Texture;
 class Mesh
 {
 public:
@@ -25,8 +25,8 @@ private:
 	// Vertex Buffer class
 	VertexBuffer* m_vertexBuffer = nullptr;
 
-	// Texture class, making new here isnt necessary, fix that
-	Texture* m_texture = new Texture();
+	// Texture class
+	Texture* m_texture = nullptr;
 
 	// Create default meshes
 	void CreateTriangle();

@@ -6,7 +6,7 @@ Texture::Texture()
 {
 }
 
-void Texture::loadTexture(const std::string& p_filePath, bool p_flipTexture)
+Texture::Texture(const std::string& p_filePath, bool p_flipTexture):Texture()
 {
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);

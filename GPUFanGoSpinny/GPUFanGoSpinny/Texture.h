@@ -3,8 +3,7 @@ class Texture
 {
 public:
 	Texture();
-
-	void loadTexture(const std::string& p_filePath, bool p_flipTexture);
+	Texture(const std::string& p_filePath, bool p_flipTexture);
 
 private:
 	unsigned char* m_data = nullptr;

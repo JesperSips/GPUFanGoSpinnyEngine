@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Texture.h"
 #include "VertexBuffer.h"
 #include "Mesh.h"
 
@@ -6,7 +7,7 @@ Mesh::Mesh()
 {
 }
 
-Mesh::Mesh(int p_default)
+Mesh::Mesh(int p_default):Mesh()
 {
     switch (p_default)
     {
@@ -78,7 +79,7 @@ void Mesh::CreateTriangle()
 
     m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
-    m_texture->loadTexture("Assets/meow.jpg", true);
+    m_texture = new Texture("Assets/meow.jpg", true);
 }
 
 void Mesh::CreateQuad()
@@ -102,7 +103,7 @@ void Mesh::CreateQuad()
 
     m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
-    m_texture->loadTexture("Assets/meow.jpg", true);
+    m_texture = new Texture("Assets/meow.jpg", true);
 }
 
 //Original code without indices
@@ -213,5 +214,5 @@ void Mesh::CreateCube()
 
     m_vertexBuffer = new VertexBuffer(vertices, numVertex, indices, numIndex);
 
-    m_texture->loadTexture("Assets/meow.jpg", true);
+    m_texture = new Texture("Assets/meow.jpg", true);
 }
