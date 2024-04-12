@@ -17,7 +17,7 @@ RendererGL::~RendererGL()
 
 }
 
-void RendererGL::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
+void RendererGL::Initialize(int p_width, int p_height)
 {
 	if (glfwInit() != GLFW_TRUE) {
 		std::cerr << "GLFW init failed" << std::endl;

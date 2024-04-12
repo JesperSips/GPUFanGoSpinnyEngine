@@ -10,7 +10,7 @@ public:
 	Renderer();
 	virtual ~Renderer();
 
-	virtual void Initialize(HINSTANCE p_hInstance, int p_width, int p_height) = 0;
+	virtual void Initialize(int p_width, int p_height) = 0;
 	
 	bool IsQuitting();
 

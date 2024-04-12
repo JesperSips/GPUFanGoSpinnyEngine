@@ -7,7 +7,7 @@ public:
 	RendererGL();
 	~RendererGL();
 
-	void Initialize(HINSTANCE p_hInstance, int p_width, int p_height);
+	void Initialize(int p_width, int p_height);
 
 	void Update();
 	void Terminate();

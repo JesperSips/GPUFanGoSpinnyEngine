@@ -15,7 +15,7 @@ RendererDX::~RendererDX()
 {
 }
 
-void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
+void RendererDX::Initialize(int p_width, int p_height)
 {
 #if defined(_DEBUG)
     // Always enable the debug layer before doing anything DX12 related
@@ -34,6 +34,7 @@ void RendererDX::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
 
     m_window = new Window(*this, p_width, p_height, "GPU fan go spinny engine");
 
+    // Imgui has been implemented, but crashes because I dont have a rendering pipeline yet, whoopsie
     //m_GUI = new ImguiManager();
 
     // The nightmare begins
