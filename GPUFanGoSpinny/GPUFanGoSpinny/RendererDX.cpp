@@ -364,7 +364,9 @@ void RendererDX::Render()
     D3D12_CPU_DESCRIPTOR_HANDLE rtv;
     rtv.ptr = g_RTVDescriptorHeap->GetCPUDescriptorHandleForHeapStart().ptr + g_CurrentBackBufferIndex * g_RTVDescriptorSize;
 
-    g_CommandList->ClearRenderTargetView(rtv, global::clearColor, 0, nullptr);
+    FLOAT clearColor[4] = { m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a };
+
+    g_CommandList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
 
     // Present
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;

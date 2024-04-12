@@ -8,7 +8,7 @@ public:
 
 	void Initialize(GLFWwindow& p_window, Renderer& p_ref);
 	void Terminate();
-	void Update();
+	void Update(glm::vec4& p_clearColor);
 	void Render();
 };
 
