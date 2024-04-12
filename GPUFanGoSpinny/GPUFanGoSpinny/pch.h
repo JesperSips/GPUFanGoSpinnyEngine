@@ -5,13 +5,6 @@
 #undef CreateWindow
 #endif
 
-struct Vertex
-{
-    float pos[3] = { 0,0,0 };
-    float rgb[3] = { 0,0,0 };
-    float tex[2] = { 0,0 };
-};
-
 #include <iostream>
 #include <stdio.h>
 #include <cassert>
@@ -20,6 +13,8 @@ struct Vertex
 #include <chrono>
 #include <string>
 #include <vector>
+
+#include "Vertex.h"
 
 // OpenGL specific headers, currently commented out to avoid errors
 #ifdef OpenGL
