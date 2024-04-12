@@ -17,6 +17,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	delete m_renderer;
 }
 
 void Engine::Initialize(HINSTANCE p_hInstance)

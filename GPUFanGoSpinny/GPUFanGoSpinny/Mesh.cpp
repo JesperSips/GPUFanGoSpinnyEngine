@@ -24,6 +24,8 @@ Mesh::Mesh(int p_default)
 
 Mesh::~Mesh()
 {
+    delete m_vertexBuffer;
+    delete m_texture;
 }
 
 const GLsizei Mesh::getIndexSize()

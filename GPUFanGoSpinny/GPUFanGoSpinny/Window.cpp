@@ -58,6 +58,7 @@ Window::Window(Renderer& p_ref, UINT32 p_width, UINT32 p_height, const std::stri
 Window::~Window()
 {
 	glfwDestroyWindow(m_window);
+	delete m_window;
 }
 
 void Window::Update()

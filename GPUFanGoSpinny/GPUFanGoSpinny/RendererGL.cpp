@@ -14,7 +14,7 @@ RendererGL::RendererGL()
 
 RendererGL::~RendererGL()
 {
-	delete m_window;
+
 }
 
 void RendererGL::Initialize(HINSTANCE p_hInstance, int p_width, int p_height)
