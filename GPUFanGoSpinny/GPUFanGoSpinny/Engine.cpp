@@ -32,7 +32,8 @@ void Engine::Initialize()
 	m_renderer = new RendererDX();
 #endif
 
-	m_renderer->Initialize(500, 500);
+	global::SetWidthAndHeight(500, 500);
+	m_renderer->Initialize(global::GetClientWidth(), global::GetClientHeight());
 
 #ifdef OpenGL
 	Mesh* mesh = new Mesh(3);

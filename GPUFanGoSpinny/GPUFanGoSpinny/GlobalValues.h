@@ -20,11 +20,20 @@ public:
 
 	static void UpdateMouseOffset(float x, float y, float xOffset, float yOffset);
 
+	inline static int GetClientWidth() { return clientWidth; }
+	inline static int GetClientHeight() { return clientHeight; }
+
+	static void SetWidthAndHeight(int width, int height);
+
 private:
 	static double lastFrameTime;
 
 	// The time when FPS was last update
 	static double lastFPSTime;
 	static int frameCount;
+
+	static int clientWidth;
+	static int clientHeight;
+
 };
 

@@ -6,6 +6,7 @@ static Renderer* rendererPtr;
 
 static void OnWindowResize(GLFWwindow* p_window, int p_width, int p_height)
 {
+	global::SetWidthAndHeight(p_width, p_height);
 	rendererPtr->Resize(p_width, p_height);
 }
 

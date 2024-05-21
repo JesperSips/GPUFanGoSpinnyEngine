@@ -14,6 +14,9 @@ double global::lastFrameTime = glfwGetTime();
 double global::lastFPSTime = glfwGetTime();
 int global::frameCount = 0;
 
+int global::clientHeight = 0;
+int global::clientWidth = 0;
+
 // This gets called in the main Update loop in Engine.cpp
 void global::UpdateGlobalValues()
 {
@@ -40,4 +43,10 @@ void global::UpdateMouseOffset(float x, float y, float xOffset, float yOffset)
 	mousePos.y = y;
 	mouseOffset.x = xOffset;
 	mouseOffset.y = yOffset;
+}
+
+void global::SetWidthAndHeight(int width, int height)
+{
+	clientWidth = width;
+	clientHeight = height;
 }
