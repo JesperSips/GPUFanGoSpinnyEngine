@@ -36,7 +36,9 @@ private:
 	ComPtr<ID3D12GraphicsCommandList> g_CommandList;
 	ComPtr<ID3D12CommandAllocator> g_CommandAllocators[g_NumFrames];
 	ComPtr<ID3D12DescriptorHeap> g_RTVDescriptorHeap;
+	ComPtr<ID3D12DescriptorHeap> g_DSVDescriptorHeap;
 	UINT g_RTVDescriptorSize;
+	UINT g_DSVDescriptorSize;
 	UINT g_CurrentBackBufferIndex;
 
 	// Synchronization objects
@@ -52,10 +54,14 @@ private:
 	ComPtr<IDXGISwapChain4> CreateSwapChain(HWND hWnd, ComPtr<ID3D12CommandQueue> commandQueue, uint32_t width, uint32_t height, uint32_t bufferCount);
 	ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ComPtr<ID3D12Device2> device, D3D12_DESCRIPTOR_HEAP_TYPE type, uint32_t numDescriptors);
 	void UpdateRenderTargetViews(ComPtr<ID3D12Device2> device, ComPtr<IDXGISwapChain4> swapChain, ComPtr<ID3D12DescriptorHeap> descriptorHeap);
+	void UpdateDepthStencilView(ComPtr<ID3D12Device2> device, ComPtr<IDXGISwapChain4> swapChain, ComPtr<ID3D12DescriptorHeap> descriptorHeap);
 	ComPtr<ID3D12CommandAllocator> CreateCommandAllocator(ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type);
 	ComPtr<ID3D12GraphicsCommandList> CreateCommandList(ComPtr<ID3D12Device2> device, ComPtr<ID3D12CommandAllocator> commandAllocator, D3D12_COMMAND_LIST_TYPE type);
 	ComPtr<ID3D12Fence> CreateFence(ComPtr<ID3D12Device2> device);
 	HANDLE CreateEventHandle();
+
+	// Buffers
+	ComPtr<ID3D12Resource> m_depthStencilBuffer;
 
 	uint64_t Signal(ComPtr<ID3D12CommandQueue> commandQueue, ComPtr<ID3D12Fence> fence, uint64_t& fenceValue);
 	void WaitForFenceValue(ComPtr<ID3D12Fence> fence, uint64_t fenceValue, HANDLE fenceEvent, std::chrono::milliseconds duration = std::chrono::milliseconds::max());

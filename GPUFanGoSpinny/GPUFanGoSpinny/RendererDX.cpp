@@ -51,7 +51,8 @@ void RendererDX::Initialize(int p_width, int p_height)
     g_RTVDescriptorHeap = CreateDescriptorHeap(g_Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, g_NumFrames);
     g_RTVDescriptorSize = g_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-    UpdateRenderTargetViews(g_Device, g_SwapChain, g_RTVDescriptorHeap);
+    g_DSVDescriptorHeap = CreateDescriptorHeap(g_Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1);
+    g_DSVDescriptorSize = g_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
     for (int i = 0; i < g_NumFrames; ++i)
     {
@@ -61,6 +62,9 @@ void RendererDX::Initialize(int p_width, int p_height)
 
     g_Fence = CreateFence(g_Device);
     g_FenceEvent = CreateEventHandle();
+
+    // Initial resize to set RTV and DSV
+    Resize(p_width,p_height);
 
     // Imgui needs DX12 objects, so initialize it after everything else
     //m_GUI->Initialize(*m_window->GetWindow(), *this);
@@ -90,6 +94,8 @@ void RendererDX::Resize(int p_width, int p_height)
 {
     Flush(g_CommandQueue, g_Fence, g_FenceValue, g_FenceEvent);
 
+    ThrowIfFailed(g_CommandList->Reset(g_CommandAllocators[g_CurrentBackBufferIndex].Get(), nullptr));
+
     for (int i = 0; i < g_NumFrames; ++i)
     {
         // Any references to the back buffers must be released
@@ -98,6 +104,8 @@ void RendererDX::Resize(int p_width, int p_height)
         g_FrameFenceValues[i] = g_FrameFenceValues[g_CurrentBackBufferIndex];
     }
 
+    m_depthStencilBuffer.Reset();
+
     DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
     ThrowIfFailed(g_SwapChain->GetDesc(&swapChainDesc));
     ThrowIfFailed(g_SwapChain->ResizeBuffers(g_NumFrames, p_width, p_height, swapChainDesc.BufferDesc.Format, swapChainDesc.Flags));
@@ -105,6 +113,16 @@ void RendererDX::Resize(int p_width, int p_height)
     g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
 
     UpdateRenderTargetViews(g_Device, g_SwapChain, g_RTVDescriptorHeap);
+    UpdateDepthStencilView(g_Device, g_SwapChain, g_DSVDescriptorHeap);
+
+    ThrowIfFailed(g_CommandList->Close());
+    ID3D12CommandList* const commandLists[] = {
+    g_CommandList.Get()
+    };
+    g_CommandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
+
+    // Wait for resize to finish
+    Flush(g_CommandQueue, g_Fence, g_FenceValue, g_FenceEvent);
 }
 
 ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)
@@ -258,6 +276,8 @@ ComPtr<ID3D12DescriptorHeap> RendererDX::CreateDescriptorHeap(ComPtr<ID3D12Devic
     D3D12_DESCRIPTOR_HEAP_DESC desc = {};
     desc.NumDescriptors = numDescriptors;
     desc.Type = type;
+    desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+    desc.NodeMask = 0;
 
     ThrowIfFailed(device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&descriptorHeap)));
 
@@ -281,6 +301,60 @@ void RendererDX::UpdateRenderTargetViews(ComPtr<ID3D12Device2> device, ComPtr<ID
 
         rtvHandle.ptr += rtvDescriptorSize;
     }
+}
+
+void RendererDX::UpdateDepthStencilView(ComPtr<ID3D12Device2> device, ComPtr<IDXGISwapChain4> swapChain, ComPtr<ID3D12DescriptorHeap> descriptorHeap)
+{
+    // Describe and create the depth stencil view (DSV)
+    D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+    dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+    dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
+
+    D3D12_RESOURCE_DESC depthStencilDesc = {};
+    depthStencilDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+    depthStencilDesc.Alignment = 0;
+    depthStencilDesc.Width = global::GetClientWidth();
+    depthStencilDesc.Height = global::GetClientHeight();
+    depthStencilDesc.DepthOrArraySize = 1;
+    depthStencilDesc.MipLevels = 1;
+    depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // This is the one they use in the book, might have to change later
+    depthStencilDesc.SampleDesc.Count = 1; // Book uses 4 or 1 based on 4xMsaa anti-aliasing, I'll have to implement that later
+    depthStencilDesc.SampleDesc.Quality = 0; // Same as above
+    depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+    depthStencilDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+    D3D12_CLEAR_VALUE optClear = {};
+    optClear.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    optClear.DepthStencil.Depth = 1.0f;
+    optClear.DepthStencil.Stencil = 0;
+
+    D3D12_HEAP_PROPERTIES heapProperties = {};
+    heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+    heapProperties.CreationNodeMask = 1;
+    heapProperties.VisibleNodeMask = 1;
+    heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+    heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+
+    ThrowIfFailed(device->CreateCommittedResource(&heapProperties,
+        D3D12_HEAP_FLAG_NONE,
+        &depthStencilDesc,
+        D3D12_RESOURCE_STATE_COMMON,
+        &optClear,
+        IID_PPV_ARGS(m_depthStencilBuffer.GetAddressOf())));
+
+    device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &dsvDesc, descriptorHeap->GetCPUDescriptorHandleForHeapStart());
+
+    // Transition the resource to be used as a depth buffer
+    D3D12_RESOURCE_BARRIER barrier = {};
+    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+    barrier.Transition.pResource = m_depthStencilBuffer.Get();
+    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COMMON;
+    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_DEPTH_WRITE;
+    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+    g_CommandList->ResourceBarrier(1, &barrier);
 }
 
 ComPtr<ID3D12CommandAllocator> RendererDX::CreateCommandAllocator(ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type)
