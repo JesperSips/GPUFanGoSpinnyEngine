@@ -44,7 +44,7 @@ private:
 	uint64_t g_FenceValue = 0;
 	uint64_t g_FrameFenceValues[g_NumFrames] = {};
 	HANDLE g_FenceEvent;
-
+	
 	// Object creation functions
 	ComPtr<IDXGIAdapter4> GetAdapter(bool useWarp);
 	ComPtr<ID3D12Device2> CreateDevice(ComPtr<IDXGIAdapter4> adapter);
@@ -62,5 +62,15 @@ private:
 	void Flush(ComPtr<ID3D12CommandQueue> commandQueue, ComPtr<ID3D12Fence> fence, uint64_t& fenceValue, HANDLE fenceEvent);
 
 	void Render();
+
+	// From DXSampleHelper.h 
+	// Source: https://github.com/Microsoft/DirectX-Graphics-Samples
+	inline void ThrowIfFailed(HRESULT hr)
+	{
+		if (FAILED(hr))
+		{
+			throw std::exception();
+		}
+	}
 };
 

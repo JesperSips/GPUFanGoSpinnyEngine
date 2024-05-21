@@ -22,7 +22,7 @@ void RendererDX::Initialize(int p_width, int p_height)
     // so all possible errors generated while creating DX12 objects
     // are caught by the debug layer.
     ComPtr<ID3D12Debug> debugInterface;
-    D3D12GetDebugInterface(IID_PPV_ARGS(&debugInterface));
+    ThrowIfFailed(D3D12GetDebugInterface(IID_PPV_ARGS(&debugInterface)));
     debugInterface->EnableDebugLayer();
 #endif
 
@@ -99,8 +99,8 @@ void RendererDX::Resize(int p_width, int p_height)
     }
 
     DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
-    g_SwapChain->GetDesc(&swapChainDesc);
-    g_SwapChain->ResizeBuffers(g_NumFrames, p_width, p_height, swapChainDesc.BufferDesc.Format, swapChainDesc.Flags);
+    ThrowIfFailed(g_SwapChain->GetDesc(&swapChainDesc));
+    ThrowIfFailed(g_SwapChain->ResizeBuffers(g_NumFrames, p_width, p_height, swapChainDesc.BufferDesc.Format, swapChainDesc.Flags));
 
     g_CurrentBackBufferIndex = g_SwapChain->GetCurrentBackBufferIndex();
 
@@ -115,15 +115,15 @@ ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)
     createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
 #endif
 
-    CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory));
+    ThrowIfFailed(CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory)));
 
     ComPtr<IDXGIAdapter1> dxgiAdapter1;
     ComPtr<IDXGIAdapter4> dxgiAdapter4;
 
     if (useWarp)
     {
-        dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&dxgiAdapter1));
-        dxgiAdapter1.As(&dxgiAdapter4);
+        ThrowIfFailed(dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&dxgiAdapter1)));
+        ThrowIfFailed(dxgiAdapter1.As(&dxgiAdapter4));
     }
     else
     {
@@ -142,7 +142,7 @@ ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)
                 dxgiAdapterDesc1.DedicatedVideoMemory > maxDedicatedVideoMemory)
             {
                 maxDedicatedVideoMemory = dxgiAdapterDesc1.DedicatedVideoMemory;
-                dxgiAdapter1.As(&dxgiAdapter4);
+                ThrowIfFailed(dxgiAdapter1.As(&dxgiAdapter4));
             }
         }
     }
@@ -153,7 +153,7 @@ ComPtr<IDXGIAdapter4> RendererDX::GetAdapter(bool useWarp)
 ComPtr<ID3D12Device2> RendererDX::CreateDevice(ComPtr<IDXGIAdapter4> adapter)
 {
     ComPtr<ID3D12Device2> d3d12Device2;
-    D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&d3d12Device2));
+    ThrowIfFailed(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&d3d12Device2)));
 
     // Enable debug messages in debug mode.
 #if defined(_DEBUG)
@@ -186,7 +186,7 @@ ComPtr<ID3D12Device2> RendererDX::CreateDevice(ComPtr<IDXGIAdapter4> adapter)
         NewFilter.DenyList.NumIDs = _countof(DenyIds);
         NewFilter.DenyList.pIDList = DenyIds;
 
-        pInfoQueue->PushStorageFilter(&NewFilter);
+        ThrowIfFailed(pInfoQueue->PushStorageFilter(&NewFilter));
     }
 #endif
 
@@ -203,7 +203,7 @@ ComPtr<ID3D12CommandQueue> RendererDX::CreateCommandQueue(ComPtr<ID3D12Device2> 
     desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     desc.NodeMask = 0;
 
-    device->CreateCommandQueue(&desc, IID_PPV_ARGS(&d3d12CommandQueue));
+    ThrowIfFailed(device->CreateCommandQueue(&desc, IID_PPV_ARGS(&d3d12CommandQueue)));
 
     return d3d12CommandQueue;
 }
@@ -217,7 +217,7 @@ ComPtr<IDXGISwapChain4> RendererDX::CreateSwapChain(HWND hWnd, ComPtr<ID3D12Comm
     createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
 #endif
 
-    CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory4));
+    ThrowIfFailed(CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory4)));
 
     DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
     swapChainDesc.Width = width;
@@ -234,19 +234,19 @@ ComPtr<IDXGISwapChain4> RendererDX::CreateSwapChain(HWND hWnd, ComPtr<ID3D12Comm
     swapChainDesc.Flags = 0;
 
     ComPtr<IDXGISwapChain1> swapChain1;
-   dxgiFactory4->CreateSwapChainForHwnd(
+    ThrowIfFailed(dxgiFactory4->CreateSwapChainForHwnd(
         commandQueue.Get(),
         hWnd,
         &swapChainDesc,
         nullptr,
         nullptr,
-        &swapChain1);
+        &swapChain1));
 
    // Disable the Alt+Enter fullscreen toggle feature. Switching to fullscreen
     // will be handled manually.
-   dxgiFactory4->MakeWindowAssociation(hWnd, DXGI_MWA_NO_ALT_ENTER);
+    ThrowIfFailed(dxgiFactory4->MakeWindowAssociation(hWnd, DXGI_MWA_NO_ALT_ENTER));
 
-   swapChain1.As(&dxgiSwapChain4);
+    ThrowIfFailed(swapChain1.As(&dxgiSwapChain4));
 
    return dxgiSwapChain4;
 }
@@ -259,7 +259,7 @@ ComPtr<ID3D12DescriptorHeap> RendererDX::CreateDescriptorHeap(ComPtr<ID3D12Devic
     desc.NumDescriptors = numDescriptors;
     desc.Type = type;
 
-    device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&descriptorHeap));
+    ThrowIfFailed(device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&descriptorHeap)));
 
     return descriptorHeap;
 }
@@ -273,7 +273,7 @@ void RendererDX::UpdateRenderTargetViews(ComPtr<ID3D12Device2> device, ComPtr<ID
     for (int i = 0; i < g_NumFrames; ++i)
     {
         ComPtr<ID3D12Resource> backBuffer;
-        swapChain->GetBuffer(i, IID_PPV_ARGS(&backBuffer));
+        ThrowIfFailed(swapChain->GetBuffer(i, IID_PPV_ARGS(&backBuffer)));
 
         device->CreateRenderTargetView(backBuffer.Get(), nullptr, rtvHandle);
 
@@ -286,7 +286,7 @@ void RendererDX::UpdateRenderTargetViews(ComPtr<ID3D12Device2> device, ComPtr<ID
 ComPtr<ID3D12CommandAllocator> RendererDX::CreateCommandAllocator(ComPtr<ID3D12Device2> device, D3D12_COMMAND_LIST_TYPE type)
 {
     ComPtr<ID3D12CommandAllocator> commandAllocator;
-    device->CreateCommandAllocator(type, IID_PPV_ARGS(&commandAllocator));
+    ThrowIfFailed(device->CreateCommandAllocator(type, IID_PPV_ARGS(&commandAllocator)));
 
     return commandAllocator;
 }
@@ -294,9 +294,9 @@ ComPtr<ID3D12CommandAllocator> RendererDX::CreateCommandAllocator(ComPtr<ID3D12D
 ComPtr<ID3D12GraphicsCommandList> RendererDX::CreateCommandList(ComPtr<ID3D12Device2> device, ComPtr<ID3D12CommandAllocator> commandAllocator, D3D12_COMMAND_LIST_TYPE type)
 {
     ComPtr<ID3D12GraphicsCommandList> commandList;
-    device->CreateCommandList(0, type, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList));
+    ThrowIfFailed(device->CreateCommandList(0, type, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList)));
 
-    commandList->Close();
+    ThrowIfFailed(commandList->Close());
 
     return commandList;
 }
@@ -305,7 +305,7 @@ ComPtr<ID3D12Fence> RendererDX::CreateFence(ComPtr<ID3D12Device2> device)
 {
     ComPtr<ID3D12Fence> fence;
 
-    device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+    ThrowIfFailed(device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence)));
 
     return fence;
 }
@@ -323,7 +323,7 @@ HANDLE RendererDX::CreateEventHandle()
 uint64_t RendererDX::Signal(ComPtr<ID3D12CommandQueue> commandQueue, ComPtr<ID3D12Fence> fence, uint64_t& fenceValue)
 {
     uint64_t fenceValueForSignal = ++fenceValue;
-    commandQueue->Signal(fence.Get(), fenceValueForSignal);
+    ThrowIfFailed(commandQueue->Signal(fence.Get(), fenceValueForSignal));
 
     return fenceValueForSignal;
 }
@@ -332,7 +332,7 @@ void RendererDX::WaitForFenceValue(ComPtr<ID3D12Fence> fence, uint64_t fenceValu
 {
     if (fence->GetCompletedValue() < fenceValue)
     {
-        fence->SetEventOnCompletion(fenceValue, fenceEvent);
+        ThrowIfFailed(fence->SetEventOnCompletion(fenceValue, fenceEvent));
         ::WaitForSingleObject(fenceEvent, static_cast<DWORD>(duration.count()));
     }
 }
@@ -374,14 +374,14 @@ void RendererDX::Render()
 
     g_CommandList->ResourceBarrier(1, &barrier);
 
-    g_CommandList->Close();
+    ThrowIfFailed(g_CommandList->Close());
 
     ID3D12CommandList* const commandLists[] = {
         g_CommandList.Get()
     };
     g_CommandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
 
-    g_SwapChain->Present(0, 0);
+    ThrowIfFailed(g_SwapChain->Present(0, 0));
 
     g_FrameFenceValues[g_CurrentBackBufferIndex] = Signal(g_CommandQueue, g_Fence, g_FenceValue);
 
