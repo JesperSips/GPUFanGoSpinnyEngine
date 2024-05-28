@@ -41,6 +41,9 @@ private:
 	UINT g_DSVDescriptorSize;
 	UINT g_CurrentBackBufferIndex;
 
+	D3D12_VIEWPORT m_viewPort;
+	D3D12_RECT m_rect;
+
 	// Synchronization objects
 	ComPtr<ID3D12Fence> g_Fence;
 	uint64_t g_FenceValue = 0;

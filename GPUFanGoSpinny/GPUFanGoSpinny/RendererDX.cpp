@@ -115,6 +115,22 @@ void RendererDX::Resize(int p_width, int p_height)
     UpdateRenderTargetViews(g_Device, g_SwapChain, g_RTVDescriptorHeap);
     UpdateDepthStencilView(g_Device, g_SwapChain, g_DSVDescriptorHeap);
 
+    m_viewPort.TopLeftX = 0.0f;
+    m_viewPort.TopLeftY = 0.0f;
+    m_viewPort.Width = static_cast<float>(p_width);
+    m_viewPort.Height = static_cast<float>(p_height);
+    m_viewPort.MinDepth = 0.0f;
+    m_viewPort.MaxDepth = 1.0f;
+
+    g_CommandList->RSSetViewports(1, &m_viewPort);
+
+    m_rect.left = 0;
+    m_rect.top = 0;
+    m_rect.right = p_width / 2;
+    m_rect.bottom = p_height / 2;
+
+    g_CommandList->RSSetScissorRects(1, &m_rect);
+
     ThrowIfFailed(g_CommandList->Close());
     ID3D12CommandList* const commandLists[] = {
     g_CommandList.Get()
