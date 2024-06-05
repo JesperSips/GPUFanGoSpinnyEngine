@@ -72,14 +72,60 @@ private:
 
 	void Render();
 
-	// From DXSampleHelper.h 
-	// Source: https://github.com/Microsoft/DirectX-Graphics-Samples
-	inline void ThrowIfFailed(HRESULT hr)
+
+
+
+	// Placeholder mesh objects, these will be moved to their appropiate files later
+	const UINT64 vbByteSize = 8 * sizeof(Vertex);
+	ComPtr<ID3D12Resource> VertexBufferGPU = nullptr;
+	ComPtr<ID3D12Resource> VertexBufferUploader = nullptr;
+
+	const UINT ibByteSize = 36 * sizeof(uint16_t);
+	ComPtr<ID3D12Resource> IndexBufferGPU = nullptr;
+	ComPtr<ID3D12Resource> IndexBufferUploader = nullptr;
+
+	// Cube vertices with no texcoords, placeholder
+	// Will use mesh class later if i can be bother to continue working on this
+	Vertex ph_vertices[8] =
 	{
-		if (FAILED(hr))
-		{
-			throw std::exception();
-		}
-	}
+		// positions,       // rgb color      
+		 0.5f,  0.5f, 0.5f, 0.0f, 1.0f, 0.0f, // top right
+		 0.5f, -0.5f, 0.5f, 0.6f, 0.2f, 1.0f,// bottom right
+		-0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 1.0f,// bottom left
+		-0.5f,  0.5f, 0.5f, 0.4f, 1.0f, 0.6f,// top left 
+		// positions,       // rgb color      
+		 0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // top right
+		 0.5f, -0.5f, -0.5f, 0.6f, 0.2f, 1.0f,// bottom right
+		-0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,// bottom left
+		-0.5f,  0.5f, -0.5f, 0.4f, 1.0f, 0.6f// top left 
+
+	};
+
+	uint16_t ph_indices[36] =
+	{
+		// front face
+		0, 1, 2,
+		0, 2, 3,
+
+		// back face
+		4, 6, 5,
+		4, 7, 6,
+
+		// left face
+		4, 5, 1,
+		4, 1, 0,
+
+		// right face
+		3, 2, 6,
+		3, 6, 7,
+
+		// top face
+		1, 5, 6,
+		1, 6, 2,
+
+		// bottom face
+		4, 0, 3,
+		4, 3, 7
+	};
 };
 

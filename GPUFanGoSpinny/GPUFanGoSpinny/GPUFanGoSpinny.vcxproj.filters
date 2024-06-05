@@ -173,6 +173,9 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="UtilDX.h">
+      <Filter>Header Files\Graphics\DirectX12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Shaders\fshader.fs">
@@ -181,5 +184,13 @@
     <Text Include="Shaders\vshader.vs">
       <Filter>Shader Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\pshader.hlsl">
+      <Filter>Shader Files</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\vshader.hlsl">
+      <Filter>Shader Files</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -218,6 +218,10 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
 
 </Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>
+      </ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">
     <ClCompile>
@@ -227,7 +231,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;$(SolutionDir)GPUFanGoSpinny\Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;$(SolutionDir)GPUFanGoSpinny\Lib;$(SolutionDir)GPUFanGoSpinny\Lib\d3dx12;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,6 +245,10 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
 
 </Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>
+      </ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -268,6 +276,10 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
 
 </Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>
+      </ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">
     <ClCompile>
@@ -279,7 +291,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;$(SolutionDir)GPUFanGoSpinny\Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GPUFanGoSpinny\Lib\glew\include;$(SolutionDir)GPUFanGoSpinny\Lib\GLFW\include;$(SolutionDir)GPUFanGoSpinny\Lib\glm;$(SolutionDir)GPUFanGoSpinny\Lib\imgui;$(SolutionDir)GPUFanGoSpinny\Lib;$(SolutionDir)GPUFanGoSpinny\Lib\d3dx12;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -295,6 +307,10 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
 
 </Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>
+      </ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -428,6 +444,7 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="UtilDX.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBuffer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</ExcludedFromBuild>
@@ -458,6 +475,24 @@ xcopy "$(ProjectDir)Assets\*.*" "$(TargetDir)\Assets" /Y /I /E
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">true</DeploymentContent>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\pshader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\vshader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseDX12|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='DebugDX12|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

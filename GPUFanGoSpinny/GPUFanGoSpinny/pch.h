@@ -22,15 +22,6 @@
 #include <glew.h>
 #endif
 
-// DirectX12 specific headers
-#ifdef DX12
-#include <d3d12.h>
-#include <dxgi1_6.h>
-#include <d3dcompiler.h>
-
-#include <DirectXMath.h>
-#endif
-
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_NATIVE_INCLUDE_NONE
 #include "GLFW/glfw3.h"
@@ -41,5 +32,18 @@
 #include <gtc/type_ptr.hpp>
 
 #include <wrl.h>
+
+
+// DirectX12 specific headers
+#ifdef DX12
+#include <d3d12.h>
+#include "d3dx12.h"
+#include <dxgi1_6.h>
+#include <d3dcompiler.h>
+
+#include <DirectXMath.h>
+
+#include "UtilDX.h"
+#endif
 
 #include "GlobalValues.h"
